@@ -14,74 +14,74 @@ class DeviceControl : public ControllableStatus {
    * @brief Set target temperature in °C.
    * @param x Temperature value in °C.
    */
-  bool setTargetTemp(float x);
+  auto setTargetTemp(float x) -> bool;
 
   /**
    * @brief Set target temperature. Unit : 0.5°C.
    * @param x Temperature value. Unit : 0.5°C.
    */
-  bool setTargetTempInt(uint8_t x);
+  auto setTargetTempInt(uint8_t x) -> bool;
 
   /**
    * @brief Set power status. Automatically turns on mode change.
    * @param x Power status: `ON/OFF`.
    */
-  void setPowerStatus(bool x) { m_power = x; }
+  auto setPowerStatus(bool x) { m_power = x; }
 
   /**
    * @brief Set operation mode.
    * @param value Operation mode.
    */
-  bool setMode(OperationMode value);
+  auto setMode(OperationMode value) -> bool;
 
   /**
    * @brief Set vertical swing state.
    * @param x Swing vertical state.
    */
-  void setVerticalSwing(bool x) { m_vSwing = x; }
+  auto setVerticalSwing(bool x) { m_vSwing = x; }
 
   /**
    * @brief Set horizontal swing state.
    * @param x Swing horizontal state.
    */
-  void setHorizontalSwing(bool x) { m_hSwing = x; }
+  auto setHorizontalSwing(bool x) { m_hSwing = x; }
 
   /**
    * @brief Set fan speed in percents if supported, otherwise use `FanSpeed` enum.
    * @param x Fan speed in percents or `FanSpeed` enum value.
    */
-  bool setFanSpeed(uint_fast8_t x);
+  auto setFanSpeed(uint_fast8_t x) -> bool;
 
   /**
    * @brief Set preset.
    * @param x Preset.
    */
-  void setPreset(Preset x) { m_preset = x; }
+  auto setPreset(Preset x) { m_preset = x; }
 
   /**
    * @brief Set humidity setpoint in `DRY SMART` mode.
    * @param x Humidity setpoint in percents.
    */
-  void setTargetHumidity(uint8_t x) { m_humidity = x; }
+  auto setTargetHumidity(uint8_t x) { m_humidity = x; }
 
   /**
    * @brief Clears air filter maintenance reminder.
    */
-  void clearFilterMaintenance() { m_cleanFanTime = m_parent.airFilterReminder(); }
+  auto clearFilterMaintenance() { m_cleanFanTime = m_parent.airFilterReminder(); }
 
-  DeviceData setStatusQuery() const;
+  auto setStatusQuery() const -> DeviceData;
 
   /**
    * @brief Sets the remaining time of the on timer. Unit : minutes.
    * @param minutes Remaining time in minutes.
    */
-  void setTimeOn(unsigned minutes) { m_timers.setTimeOn(m_power ? 0 : minutes); }
+  auto setTimeOn(unsigned minutes) { m_timers.setTimeOn(m_power ? 0 : minutes); }
 
   /**
    * @brief Sets the remaining time of the off timer. Unit : minutes.
    * @param minutes Remaining time in minutes.
    */
-  void setTimeOff(unsigned minutes) { m_timers.setTimeOff(m_power ? minutes : 0); }
+  auto setTimeOff(unsigned minutes) { m_timers.setTimeOff(m_power ? minutes : 0); }
 
  private:
   /// Fan speed correction.

@@ -5,7 +5,7 @@ namespace dongle {
 namespace midea {
 namespace ac {
 
-bool DeviceControl::setMode(OperationMode value) {
+auto DeviceControl::setMode(OperationMode value) -> bool {
   if (m_power && value == m_mode)
     return false;
 
@@ -20,9 +20,9 @@ bool DeviceControl::setMode(OperationMode value) {
   return true;
 }
 
-bool DeviceControl::setTargetTemp(float x) { return setTargetTempInt(x * 2 + 0.5F); }
+auto DeviceControl::setTargetTemp(float x) -> bool { return setTargetTempInt(x * 2 + 0.5F); }
 
-bool DeviceControl::setTargetTempInt(uint8_t value) {
+auto DeviceControl::setTargetTempInt(uint8_t value) -> bool {
   if (value == m_targetTemp)
     return false;
 
@@ -32,7 +32,7 @@ bool DeviceControl::setTargetTempInt(uint8_t value) {
   return true;
 }
 
-bool DeviceControl::setFanSpeed(uint_fast8_t value) {
+auto DeviceControl::setFanSpeed(uint_fast8_t value) -> bool {
   if (value == m_fanSpeed)
     return false;
 
@@ -46,7 +46,7 @@ bool DeviceControl::setFanSpeed(uint_fast8_t value) {
   return true;
 }
 
-bool DeviceControl::m_tempConstraints() {
+auto DeviceControl::m_tempConstraints() -> bool {
   auto &range(m_parent.tempRange(m_mode));
 
   if (m_targetTemp < range.min)
@@ -61,7 +61,7 @@ bool DeviceControl::m_tempConstraints() {
   return true;
 }
 
-bool DeviceControl::m_fanConstraints() {
+auto DeviceControl::m_fanConstraints() -> bool {
   switch (m_mode) {
     case MODE_AUTO:
     case MODE_DRY:
@@ -72,7 +72,7 @@ bool DeviceControl::m_fanConstraints() {
   }
 }
 
-DeviceData DeviceControl::setStatusQuery() const {
+auto DeviceControl::setStatusQuery() const -> DeviceData {
   // `old_temp` (4-bits) supports range from 17°C (1) to 30°C (14).
   // If the value is outside this range, `old_temp` is equal to the minimum limit of 17°C (1).
   // `new_temp` (5-bits) supports more wide range from 13°C (1) to 42°C (30).
