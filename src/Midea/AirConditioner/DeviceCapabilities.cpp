@@ -16,7 +16,7 @@ bool DeviceCapabilities::isQueryNeeded() const {
          m_hasIndoorHumidity || m_hasVerticalWind || m_hasHorizontalWind || m_isTwins || m_isFourDirection;
 }
 
-static uint_fast8_t static_mode(uint_fast8_t x) {
+static auto static_mode(uint_fast8_t x) {
   switch (x) {
     case 1:
       return 0b1111;  // DRY | HEAT | AUTO | COOL
@@ -33,7 +33,7 @@ static uint_fast8_t static_mode(uint_fast8_t x) {
   }
 }
 
-static uint_fast8_t static_swing(uint_fast8_t x) {
+static auto static_swing(uint_fast8_t x) {
   switch (x) {
     case 1:
       return 0b11;  // HORIZONTAL | VERTICAL
@@ -46,7 +46,7 @@ static uint_fast8_t static_swing(uint_fast8_t x) {
   }
 }
 
-static uint_fast8_t static_fan_speed(uint_fast8_t x) {
+static auto static_fan_speed(uint_fast8_t x) {
   switch (x) {
     case 1:
       return 0b11111;  // RAW | AUTO | HIGH | MEDIUM | LOW
@@ -63,7 +63,7 @@ static uint_fast8_t static_fan_speed(uint_fast8_t x) {
   }
 }
 
-static uint_fast8_t static_dry_smart(uint_fast8_t x) {
+static auto static_dry_smart(uint_fast8_t x) {
   switch (x) {
     case 1:
       return 0b01;  // AUTO
@@ -76,7 +76,7 @@ static uint_fast8_t static_dry_smart(uint_fast8_t x) {
   }
 }
 
-static uint_fast8_t static_turbo(uint_fast8_t x) {
+static auto static_turbo(uint_fast8_t x) {
   switch (x) {
     case 0:
       return 0b01;  // COOL
@@ -89,7 +89,7 @@ static uint_fast8_t static_turbo(uint_fast8_t x) {
   }
 }
 
-static uint_fast8_t static_power(uint_fast8_t x) {
+static auto static_power(uint_fast8_t x) {
   switch (x) {
     case 2:
       return 0b01;
@@ -100,7 +100,7 @@ static uint_fast8_t static_power(uint_fast8_t x) {
   }
 }
 
-static uint_fast8_t static_filter(uint_fast8_t x) {
+static auto static_filter(uint_fast8_t x) {
   switch (x) {
     case 0:
       return 0b00;
@@ -113,7 +113,7 @@ static uint_fast8_t static_filter(uint_fast8_t x) {
   }
 }
 
-static uint_fast8_t static_eco(uint_fast8_t x) {
+static auto static_eco(uint_fast8_t x) {
   switch (x) {
     case 1:
       return 0b01;
@@ -124,7 +124,7 @@ static uint_fast8_t static_eco(uint_fast8_t x) {
   }
 }
 
-bool DeviceCapabilities::hasMode(OperationMode x) const {
+auto DeviceCapabilities::hasMode(OperationMode x) const -> bool {
   switch (x) {
     case MODE_AUTO:
       return hasModeAuto();
@@ -143,14 +143,14 @@ bool DeviceCapabilities::hasMode(OperationMode x) const {
   }
 }
 
-DeviceCapabilities::TempRange DeviceCapabilities::tempRangeMax() const {
+auto DeviceCapabilities::tempRangeMax() const -> TempRange {
   return {
       std::min({m_tempCool.min, m_tempAuto.min, m_tempHeat.min}),
       std::max({m_tempCool.max, m_tempAuto.max, m_tempHeat.max}),
   };
 }
 
-const DeviceCapabilities::TempRange &DeviceCapabilities::tempRange(OperationMode mode) const {
+auto DeviceCapabilities::tempRange(OperationMode mode) const -> const TempRange & {
   switch (mode) {
     case MODE_AUTO:
       return m_tempAuto;
@@ -161,7 +161,7 @@ const DeviceCapabilities::TempRange &DeviceCapabilities::tempRange(OperationMode
   }
 }
 
-bool DeviceCapabilities::hasFanSpeed(uint_fast8_t x) const {
+auto DeviceCapabilities::hasFanSpeed(uint_fast8_t x) const -> bool {
   switch (x) {
     case FAN_AUTO:
       return hasFanAuto();
@@ -176,14 +176,14 @@ bool DeviceCapabilities::hasFanSpeed(uint_fast8_t x) const {
   }
 }
 
-void DeviceCapabilities::m_temp(const uint8_t *x) {
+auto DeviceCapabilities::m_temp(const uint8_t *x) -> void {
   m_tempCool = {x[0], x[1]};
   m_tempAuto = {x[2], x[3]};
   m_tempHeat = {x[4], x[5]};
   m_hasTempDot = bool(x[6]);
 }
 
-void DeviceCapabilities::m_onProperty(const Property &x) {
+auto DeviceCapabilities::m_onProperty(const Property &x) -> void {
   const uint_fast8_t data(*x.data());
   const uint_fast16_t uuid(x.uuid());
   const bool nzero(data);
@@ -273,7 +273,7 @@ void DeviceCapabilities::m_onProperty(const Property &x) {
   }
 }
 
-void DeviceCapabilities::dump() const {
+auto DeviceCapabilities::dump() const -> void {
 #if LOG_LEVEL >= LOG_LEVEL_CONFIG
 #define LOG_CAPABILITY(str, condition) \
   if (condition) \

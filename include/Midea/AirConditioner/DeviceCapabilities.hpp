@@ -74,62 +74,62 @@ class DeviceCapabilities : public MideaCapabilities {
    * @brief Checks if `LOW` fan speed is supported.
    * @return `true` if supported.
    */
-  bool hasFanLow() const { return m_hasFan & 0b00001; }
+  auto hasFanLow() const -> bool { return m_hasFan & 0b00001; }
 
   /**
    * @brief Checks if `MEDIUM` fan speed is supported.
    * @return `true` if supported.
    */
-  bool hasFanMedium() const { return m_hasFan & 0b00010; }
+  auto hasFanMedium() const -> bool { return m_hasFan & 0b00010; }
 
   /**
    * @brief Checks if `HIGH` fan speed is supported.
    * @return `true` if supported.
    */
-  bool hasFanHigh() const { return m_hasFan & 0b00100; }
+  auto hasFanHigh() const -> bool { return m_hasFan & 0b00100; }
 
   /**
    * @brief Checks if `AUTO` fan speed is supported.
    * @return `true` if supported.
    */
-  bool hasFanAuto() const { return m_hasFan & 0b01000; }
+  auto hasFanAuto() const -> bool { return m_hasFan & 0b01000; }
 
   /**
    * @brief Checks if `RAW` fan speed is supported. Unit : `%`.
    * @return `true` if supported.
    */
-  bool hasFanRaw() const { return m_hasFan & 0b10000; }
+  auto hasFanRaw() const -> bool { return m_hasFan & 0b10000; }
 
   /**
    * @brief Checks if fan speed is supported.
    * @param x Fan speed.
    * @return `true` if supported.
    */
-  bool hasFanSpeed(uint_fast8_t x) const;
+  auto hasFanSpeed(uint_fast8_t x) const -> bool;
 
   /**
    * @brief `COOL` mode supported.
    * @return
    */
-  bool hasModeCool() const { return m_hasMode & 0b0001; }
+  auto hasModeCool() const -> bool { return m_hasMode & 0b0001; }
 
   /**
    * @brief `AUTO` mode supported.
    * @return
    */
-  bool hasModeAuto() const { return m_hasMode & 0b0010; }
+  auto hasModeAuto() const -> bool { return m_hasMode & 0b0010; }
 
   /**
    * @brief `HEAT` mode supported.
    * @return
    */
-  bool hasModeHeat() const { return m_hasMode & 0b0100; }
+  auto hasModeHeat() const -> bool { return m_hasMode & 0b0100; }
 
   /**
    * @brief `DRY` mode supported.
    * @return
    */
-  bool hasModeDry() const { return m_hasMode & 0b1000; }
+  auto hasModeDry() const -> bool { return m_hasMode & 0b1000; }
 
   /**
    * @brief Checks if the `Dry` mode has a smart mode.
@@ -138,7 +138,7 @@ class DeviceCapabilities : public MideaCapabilities {
    *
    * @return `true` if the `Dry` mode has a smart mode.
    */
-  bool hasDrySmart() const { return m_hasDrySmart & 0b01; }
+  auto hasDrySmart() const -> bool { return m_hasDrySmart & 0b01; }
 
   /**
    * @brief Checks if the `Dry Custom` mode is supported.
@@ -147,94 +147,94 @@ class DeviceCapabilities : public MideaCapabilities {
    *
    * @return `true` if the `Dry Custom` mode is supported.
    */
-  bool hasModeDryCustom() const { return m_hasDrySmart & 0b10; }
+  auto hasModeDryCustom() const -> bool { return m_hasDrySmart & 0b10; }
 
   /**
    * @brief Checks if the built-in humidity sensor can be read.
    * @return `true` if the built-in humidity sensor can be read.
    */
-  bool hasIndoorHumidity() const { return m_hasIndoorHumidity; }
+  auto hasIndoorHumidity() const -> bool { return m_hasIndoorHumidity; }
 
   /**
    * @brief Checks if operation mode is supported.
    * @param mode Operation mode enumeration.
    * @return `true` if operation mode is supported.
    */
-  bool hasMode(OperationMode mode) const;
+  auto hasMode(OperationMode mode) const -> bool;
 
   /**
    * @brief Gets temperature range in specified operation mode.
    * @param mode Operation mode enumeration.
    * @return Reference to `TempRange` instance.
    */
-  const TempRange &tempRange(OperationMode mode) const;
+  auto tempRange(OperationMode mode) const -> const TempRange &;
 
   /**
    * @brief Gets widest temperature range.
    * @return `TempRange` instance.
    */
-  TempRange tempRangeMax() const;
+  auto tempRangeMax() const -> TempRange;
 
   /// `COOL TURBO` preset supported.
-  bool hasTurboCool() const { return m_hasTurbo & 0b01; }
+  auto hasTurboCool() const -> bool { return m_hasTurbo & 0b01; }
   /// `HEAT TURBO` preset supported.
-  bool hasTurboHeat() const { return m_hasTurbo & 0b10; }
+  auto hasTurboHeat() const -> bool { return m_hasTurbo & 0b10; }
 
   /// `VERTICAL SWING` supported.
-  bool hasSwingVertical() const { return m_hasSwing & 0b01; }
+  auto hasSwingVertical() const -> bool { return m_hasSwing & 0b01; }
   /// `HORIZONTAL SWING` supported.
-  bool hasSwingHorizontal() const { return m_hasSwing & 0b10; }
+  auto hasSwingHorizontal() const -> bool { return m_hasSwing & 0b10; }
   /// `BOTH SWING` supported.
-  bool hasSwingBoth() const { return m_hasSwing == 0b11; }
+  auto hasSwingBoth() const -> bool { return m_hasSwing == 0b11; }
 
   /// `POWER USAGE` report supported.
-  bool hasPowerReport() const { return m_hasPower & 0b01; }
+  auto hasPowerReport() const -> bool { return m_hasPower & 0b01; }
   /// `POWER LIMIT` supported.
-  bool hasPowerLimits() const { return m_hasPower & 0b10; }
+  auto hasPowerLimits() const -> bool { return m_hasPower & 0b10; }
 
   /// `AIR FILTER CLEANING REMAINDER` supported.
-  bool hasFilterCleanReminder() const { return m_hasFilter & 0b01; }
+  auto hasFilterCleanReminder() const -> bool { return m_hasFilter & 0b01; }
   /// `AIR FILTER REPLACEMENT REMAINDER` supported.
-  bool hasFilterReplaceReminder() const { return m_hasFilter & 0b10; }
+  auto hasFilterReplaceReminder() const -> bool { return m_hasFilter & 0b10; }
 
   /// `ECO` preset supported. Only in `COOL` mode with low limit of target temp `24`.
-  bool hasEco() const { return m_hasEco & 0b01; }
+  auto hasEco() const -> bool { return m_hasEco & 0b01; }
   /// `SPECIAL ECO` preset supported. This mode is similar to `ECO`, but with `AUTO` and `DRY` modes without temp limit.
-  bool hasEcoSpecial() const { return m_hasEco & 0b10; }
+  auto hasEcoSpecial() const -> bool { return m_hasEco & 0b10; }
 
   /**
    * @brief Checks if the LED display has an extra decimal place `.5`.
    * @return `true` if the LED display has an extra decimal place `.5`.
    */
-  bool hasDotFive() const { return m_hasTempDot; }
+  auto hasDotFive() const -> bool { return m_hasTempDot; }
 
   /**
    * @brief Checks if the LED display has an extra decimal place `.5`.
    * @return `true` if the LED display has an extra decimal place `.5`.
    */
-  bool hasFahrenheits() const { return m_unitChangeable; }
+  auto hasFahrenheits() const -> bool { return m_unitChangeable; }
 
   /**
    * @brief Checks whether the outdoor unit is equipped with an electric heater.
    * @return `true` if the outdoor unit is equipped with an electric heater.
    */
-  bool hasElectricHeater() const { return m_dianfure; }
+  auto hasElectricHeater() const -> bool { return m_dianfure; }
 
   /**
    * @brief Dump capabilities report to logs.
    *
    */
-  void dump() const override;
+  auto dump() const -> void override;
 
   /**
    * @brief Checks if any of 0xB1 capabilities is supported.
    * @return `true` if any of 0xB1 capabilities is supported.
    */
-  bool isQueryNeeded() const override;
+  auto isQueryNeeded() const -> bool override;
 
  protected:
-  void m_onProperty(const Property &x) override;
-  void m_temp(const uint8_t *x);
+  auto m_onProperty(const Property &x) -> void override;
+  auto m_temp(const uint8_t *x) -> void;
 
   /* 0x40/0x41 capabilities */
 
