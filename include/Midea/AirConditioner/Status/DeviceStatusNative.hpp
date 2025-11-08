@@ -7,7 +7,7 @@ namespace dongle {
 namespace midea {
 namespace ac {
 
-struct DeviceStatusA0 {
+struct MessageA0 {
   /* Byte #0 */
 
   uint8_t id;
@@ -137,7 +137,7 @@ struct DeviceStatusA0 {
   uint8_t : 4;
 };
 
-struct DeviceStatusA1 {
+struct MessageA1 {
   /* Byte #0-12 */
 
   uint8_t id;
@@ -165,7 +165,7 @@ struct DeviceStatusA1 {
 /**
  * @brief Device state `0xC0` message body. Size: 22 bytes.
  */
-struct DeviceStatusC0 {
+struct MessageC0 {
   // Byte #0
 
   uint8_t id;
@@ -341,7 +341,7 @@ struct DeviceStatusC0 {
   uint8_t : 4;
 };
 
-struct DeviceStatusC1 {
+struct MessageC1 {
   /* Byte #0-15 */
 
   uint8_t id;

@@ -139,7 +139,7 @@ class ControllableStatusOld {
 
  protected:
   template<typename T> auto m_update(const T &x);
-  auto m_update(const DeviceStatusA1 &x) { m_humidity = x.humidity; }
+  auto m_update(const MessageA1 &x) { m_humidity = x.humidity; }
   /// Power status: `ON/OFF`.
   bool m_power : 1;
   /// Operation mode.
@@ -192,10 +192,10 @@ class ReadableStatusOld {
   auto ledDisplayStatus() const { return light; }
 
  protected:
-  void m_update(const DeviceStatusC0 &x);
-  void m_update(const DeviceStatusC1 &x);
-  void m_update(const DeviceStatusA0 &x);
-  void m_update(const DeviceStatusA1 &x);
+  void m_update(const MessageC0 &x);
+  void m_update(const MessageC1 &x);
+  void m_update(const MessageA0 &x);
+  void m_update(const MessageA1 &x);
 
  private:
   /// Real-time power. Unit : Watt.
