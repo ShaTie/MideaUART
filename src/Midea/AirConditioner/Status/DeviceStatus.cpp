@@ -1,9 +1,6 @@
 #include <limits>
 
 #include "Midea/AirConditioner/Status/DeviceStatus.hpp"
-#include "Midea/AirConditioner/Status/Native/DeviceStatusA0.hpp"
-#include "Midea/AirConditioner/Status/Native/DeviceStatusC0.hpp"
-#include "Midea/AirConditioner/Status/Native/DeviceStatusC1.hpp"
 #include "Midea/Message/PropertiesConsumer.hpp"
 
 namespace dongle {

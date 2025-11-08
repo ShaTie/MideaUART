@@ -4,17 +4,11 @@
 
 #include "Midea/AirConditioner/DeviceCapabilities.hpp"
 #include "Midea/AirConditioner/DeviceData.hpp"
-#include "Midea/AirConditioner/Status/DeviceTimers.hpp"
-#include "Midea/AirConditioner/Status/Native/DeviceStatusA1.hpp"
-#include "Midea/AirConditioner/Status/Types.hpp"
+#include "Midea/AirConditioner/Status/DeviceStatusNative.hpp"
 
 namespace dongle {
 namespace midea {
 namespace ac {
-
-struct DeviceStatusA0;
-struct DeviceStatusC0;
-struct DeviceStatusC1;
 
 /**
  * @brief Device control settings. Stored in the device instance, copied to the control object instance to allow for
