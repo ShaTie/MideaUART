@@ -9,7 +9,7 @@ bool DeviceControl::setMode(OperationMode value) {
   if (m_power && value == m_mode)
     return false;
 
-  if (!m_device.hasMode(value))
+  if (!m_parent.hasMode(value))
     return false;
 
   m_power = true;
@@ -36,7 +36,7 @@ bool DeviceControl::setFanSpeed(uint_fast8_t value) {
   if (value == m_fanSpeed)
     return false;
 
-  if (!m_device.hasFanSpeed(value))
+  if (!m_parent.hasFanSpeed(value))
     return false;
 
   m_fanSpeed = value;
@@ -47,7 +47,7 @@ bool DeviceControl::setFanSpeed(uint_fast8_t value) {
 }
 
 bool DeviceControl::m_tempConstraints() {
-  auto &range(m_device.tempRange(m_mode));
+  auto &range(m_parent.tempRange(m_mode));
 
   if (m_targetTemp < range.min)
     m_targetTemp = range.min;
@@ -83,10 +83,10 @@ DeviceData DeviceControl::setStatusQuery() const {
     old_temp = 0;
 
   // Set PTC Assist flag if in HEAT mode and electric heater is supported.
-  bool ptc_assis(m_mode == MODE_HEAT && m_device.hasElectricHeater());
+  bool ptc_assis(m_mode == MODE_HEAT && m_parent.hasElectricHeater());
 
   Message data(MSG_CONTROL, 23);
-  auto &s(m_device);
+  auto &s(m_parent);
 
   auto shl([](auto value, auto n_bits) { return value << n_bits; });
 

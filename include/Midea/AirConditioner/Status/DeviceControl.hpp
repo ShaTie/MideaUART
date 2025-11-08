@@ -8,7 +8,7 @@ namespace ac {
 
 class DeviceControl : public ControllableStatus {
  public:
-  DeviceControl(const DeviceStatus &x) : ControllableStatus(x), m_device(x) {}
+  DeviceControl(const DeviceStatus &x) : ControllableStatus(x), m_parent(x) {}
 
   /**
    * @brief Set target temperature in °C.
@@ -23,7 +23,7 @@ class DeviceControl : public ControllableStatus {
   bool setTargetTempInt(uint8_t x);
 
   /**
-   * @brief Set power status.
+   * @brief Set power status. Automatically turns on mode change.
    * @param x Power status: `ON/OFF`.
    */
   void setPowerStatus(bool x) { m_power = x; }
@@ -67,7 +67,7 @@ class DeviceControl : public ControllableStatus {
   /**
    * @brief Clears air filter maintenance reminder.
    */
-  void clearFilterMaintenance() { m_cleanFanTime = m_device.airFilterReminder(); }
+  void clearFilterMaintenance() { m_cleanFanTime = m_parent.airFilterReminder(); }
 
   DeviceData setStatusQuery() const;
 
@@ -89,7 +89,7 @@ class DeviceControl : public ControllableStatus {
   /// Target temp correction.
   bool m_tempConstraints();
   /// Device status.
-  const DeviceStatus &m_device;
+  const DeviceStatus &m_parent;
   /// `Reset Air Filter Maintenance Timer` flag.
   bool m_cleanFanTime;
   /// Old status changed.
