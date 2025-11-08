@@ -25,19 +25,19 @@ It's simple.
 #include <Arduino.h>
 #include <Appliance/AirConditioner/AirConditioner.h>
 
-using namespace dudanov::midea::ac;
+using namespace dongle::midea::ac;
 
 AirConditioner ac;
 
 // Example how can change work mode easily
-static inline void switchMode(Mode mode) {
+static inline void switchMode(OperationMode mode) {
   Control control;
   control.mode = mode;
   ac.control(control);
 }
 
 // Example how can change mode and temp in same time
-static inline void changeState(Mode mode, float targetTemp) {
+static inline void changeState(OperationMode mode, float targetTemp) {
   Control control;
   control.mode = mode;
   control.targetTemp = targetTemp;
@@ -52,7 +52,7 @@ static inline void setPowerState(bool state) {
 // Example how can change mode to AUTO and set target temp to 25C
 static inline void changeAuto25() {
   Control control;
-  control.mode = Mode::MODE_AUTO;
+  control.mode = OperationMode::MODE_AUTO;
   control.targetTemp = 25.0f;
   ac.control(control);
 }

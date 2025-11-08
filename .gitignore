@@ -1,1 +1,5 @@
+.pio
 .vscode
+CMakeLists.txt
+html
+sdkconfig.*

@@ -1,20 +1,31 @@
-#include <Arduino.h>
-#include "Helpers/Timer.h"
+#include "Helpers/Timer.hpp"
 
-namespace dudanov {
+namespace helpers {
 
-TimerTick TimerManager::s_millis;
+// Dummy function for incorrect using case
+void Timer::s_dummyCallback(Timer *) {}
 
-// Dummy function for incorrect using case.
-static void dummy(Timer *timer) { timer->stop(); }
-Timer::Timer() : m_callback(dummy), m_alarm(0) {}
+#ifdef USE_FREERTOS
+// FreeRTOS callback
+void Timer::s_osCallback(TimerHandle_t x) { static_cast<Timer *>(pvTimerGetTimerID(x))->call(); }
 
-/// Timers task. Must be periodically called in loop function.
-void TimerManager::task() {
-  s_millis = ::millis();
-  for (auto timer : m_timers)
-    if (timer->isEnabled() && timer->isExpired())
-      timer->call();
+#else
+
+void Timer::run() {
+  if (!m_active)
+    return;
+
+  TimerTick now = millis();
+
+  if ((now - m_last) < m_timeout)
+    return;
+
+  m_last = now;
+  m_active = m_reload;
+
+  this->call();
 }
 
-}  // namespace dudanov
+#endif
+
+}  // namespace dongle
