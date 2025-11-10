@@ -20,7 +20,7 @@ Message::Message(MessageTypeID typeID, const uint8_t *data, size_t data_size) : 
 }
 
 void Message::finalize(ApplianceID appID, uint8_t protoID) {
-  auto length(m_data[IDX_LENGTH]);
+  const auto length(m_data[IDX_LENGTH]);
   m_data[IDX_APPLIANCE] = appID;
   m_data[IDX_SYNC] = length ^ appID;
   m_data[IDX_ID] = s_genId.next();
