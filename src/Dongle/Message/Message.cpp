@@ -29,8 +29,8 @@ void Message::finalize(ApplianceID appID, uint8_t protoID) {
 }
 
 uint8_t Message::m_calcChecksum() const {
-  auto it(&m_data[IDX_LENGTH]);
-  uint_fast8_t size(*it - 1), cs(0);
+  auto it(m_data.get());
+  uint_fast8_t size(m_data[IDX_LENGTH]), cs(SYM_START);
 
   do {
     cs -= *it++;
