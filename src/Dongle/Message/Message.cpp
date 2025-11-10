@@ -31,7 +31,7 @@ uint8_t Message::m_calcChecksum() const {
   return cs;
 }
 
-void Message::finalize(ApplianceID appID, uint8_t protoID) {
+void Message::finalize(uint8_t appID, uint8_t protoID) {
   const auto length(m_data[IDX_LENGTH]);
 
   m_data[IDX_APPLIANCE] = appID;

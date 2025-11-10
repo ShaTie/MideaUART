@@ -10,6 +10,32 @@
 namespace dongle {
 namespace midea {
 
+/**
+ * @brief Midea appliance types.
+ *
+ */
+enum ApplianceID : uint8_t {
+  /**
+   * @brief Dehumidifier.
+   */
+  APP_DEHUMIDIFIER = 0xA1,
+
+  /**
+   * @brief Air conditioner.
+   */
+  APP_AIR_CONDITIONER = 0xAC,
+
+  /**
+   * @brief Humidifier.
+   */
+  APP_HUMIDIFIER = 0xFD,
+
+  /**
+   * @brief Broadcast.
+   */
+  APP_BROADCAST = 0xFF,
+};
+
 using helpers::Timer;
 using helpers::WifiNotifier;
 

@@ -13,17 +13,6 @@
 namespace dongle {
 
 /**
- * @brief Appliance types ID.
- *
- */
-enum ApplianceID : uint8_t {
-  APP_DEHUMIDIFIER = 0xA1,    /**< Dehumidifier */
-  APP_AIR_CONDITIONER = 0xAC, /**< Air conditioner */
-  APP_HUMIDIFIER = 0xFD,      /**< Humidifier */
-  APP_BROADCAST = 0xFF,       /**< Broadcast */
-};
-
-/**
  * @brief Message types.
  */
 enum MessageTypeID : uint8_t {
@@ -34,6 +23,7 @@ enum MessageTypeID : uint8_t {
    * actions of the home appliance.
    */
   MSG_CONTROL = 0x02,
+
   /**
    * @brief Device Query Command.
    *
@@ -41,6 +31,7 @@ enum MessageTypeID : uint8_t {
    * status of home appliances.
    */
   MSG_QUERY = 0x03,
+
   /**
    * @brief Device operating parameter reporting (no response).
    *
@@ -48,6 +39,7 @@ enum MessageTypeID : uint8_t {
    * respond to this type of message. Analyze the content.
    */
   MSG_NOTIFY_STATUS = 0x04,
+
   /**
    * @brief Device operating parameter reporting (response required).
    *
@@ -56,6 +48,7 @@ enum MessageTypeID : uint8_t {
    * response to the home appliance.
    */
   MSG_NOTIFY_STATUS_WITH_RESPONSE = 0x05,
+
   /**
    * @brief Device abnormal event reporting (no response).
    *
@@ -63,6 +56,7 @@ enum MessageTypeID : uint8_t {
    * respond to this type of message. Analyze the content.
    */
   MSG_NOTIFY_ERROR = 0x06,
+
   /**
    * @brief Device Electronic ID Acquisition.
    *
@@ -71,6 +65,7 @@ enum MessageTypeID : uint8_t {
    * data transparent transmission.
    */
   MSG_GET_ELECTRONIC_ID = 0x07,
+
   /**
    * @brief Device abnormal event reporting (response required).
    *
@@ -79,6 +74,7 @@ enum MessageTypeID : uint8_t {
    * response to the home appliance.
    */
   MSG_NOTIFY_ERROR_WITH_RESPONSE = 0x0A,
+
   /**
    * @brief Device networking notification.
    *
@@ -86,10 +82,12 @@ enum MessageTypeID : uint8_t {
    * latest networking status.
    */
   MSG_NOTIFY_NETWORK_STATUS = 0x0D,
+
   /**
    * @brief Device Electronic ID Write.
    */
   MSG_SET_ELECTRONIC_ID = 0x11,
+
   /**
    * @brief SSID Rename.
    *
@@ -97,18 +95,22 @@ enum MessageTypeID : uint8_t {
    * specified in the message and clear the stored SSID and password information.
    */
   MSG_SET_SSID = 0x12,
+
   /**
    * @brief Read MAC address.
    */
   MSG_GET_MAC = 0x13,
+
   /**
    * @brief Time calibration.
    */
   MSG_SET_DATETIME = 0x61,
+
   /**
    * @brief Home appliance queries network and signal status.
    */
   MSG_GET_NETWORK_STATUS = 0x63,
+
   /**
    * @brief Wi-Fi signal on/off command.
    *
@@ -116,6 +118,7 @@ enum MessageTypeID : uint8_t {
    * and reception.
    */
   MSG_SET_WIFI_STATE = 0x68,
+
   /**
    * @brief Wi-Fi Parameter Configuration.
    *
@@ -123,6 +126,7 @@ enum MessageTypeID : uint8_t {
    * which module needs to connect and password to Wi-Fi Module.
    */
   MSG_SETUP_WIFI_CLIENT = 0x6A,
+
   /**
    * @brief Home appliance query AP list.
    *
@@ -131,20 +135,24 @@ enum MessageTypeID : uint8_t {
    * returns a response to the home appliance. The response message body length does not exceed 245 bytes.
    */
   MSG_GET_AP_LIST = 0x6B,
+
   /**
    * @brief Wi-Fi Working mode switch.
    *
    * This message is used to control Wi-Fi Module in AP and STA mode.
    */
   MSG_SET_WIFI_MODE = 0x81,
+
   /**
    * @brief Restart Wi-Fi module.
    */
   MSG_RESET_SOFT = 0x82,
+
   /**
    * @brief Wi-Fi module factory reset.
    */
   MSG_RESET_HARD = 0x83,
+
   /**
    * @brief Home appliance model and basic information query.
    */
@@ -208,7 +216,7 @@ class Message {
    * @param appID Appliance ID.
    * @param protoID Appliance protocol ID.
    */
-  void finalize(ApplianceID appID, uint8_t protoID);
+  void finalize(uint8_t appID, uint8_t protoID);
 
   /**
    * @brief Access for element by index.
@@ -340,15 +348,15 @@ class Message {
 
   // Constants
   enum : uint8_t {
-    IDX_START,        /**< Index of synchronization header */
-    IDX_LENGTH,       /**< Index of message length */
-    IDX_APPLIANCE,    /**< Index of home appliance type */
-    IDX_SYNC,         /**< Index of message synchronization check */
-    IDX_ID = 6,       /**< Index of message identifier */
-    IDX_PROTOCOL = 8, /**< Index of appliance protocol version */
-    IDX_TYPE,         /**< Index of message type identifier */
-    HEADER_LENGTH,    /**< Header length */
-    SYM_START = 0xAA, /**< Synchronization header */
+    IDX_START,        /**< Index of synchronization header. */
+    IDX_LENGTH,       /**< Index of message length. */
+    IDX_APPLIANCE,    /**< Index of home appliance type. */
+    IDX_SYNC,         /**< Index of message synchronization check. */
+    IDX_ID = 6,       /**< Index of message identifier. */
+    IDX_PROTOCOL = 8, /**< Index of appliance protocol version. */
+    IDX_TYPE,         /**< Index of message type identifier. */
+    HEADER_LENGTH,    /**< Header length (index of message data). */
+    SYM_START = 0xAA, /**< Synchronization header. */
   };
 };
 
