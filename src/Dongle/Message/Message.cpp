@@ -13,18 +13,32 @@ Message::Message(MessageTypeID typeID, size_t data_size)
 }
 
 Message::Message(MessageTypeID typeID, const uint8_t *data, size_t data_size) : Message(typeID, data_size) {
-  auto it(data_begin());
+  auto it(&m_data[HEADER_LENGTH]);
+
   do {
     *it++ = *data++;
   } while (--data_size);
 }
 
+uint8_t Message::m_calcChecksum() const {
+  auto it(m_data.get());
+  uint_fast8_t cs(it[IDX_START]), length(it[IDX_LENGTH]);
+
+  do {
+    cs -= *it++;
+  } while (--length);
+
+  return cs;
+}
+
 void Message::finalize(ApplianceID appID, uint8_t protoID) {
   const auto length(m_data[IDX_LENGTH]);
+
   m_data[IDX_APPLIANCE] = appID;
   m_data[IDX_SYNC] = length ^ appID;
   m_data[IDX_ID] = s_genId.next();
   m_data[IDX_PROTOCOL] = protoID;
+
   m_data[length] = m_calcChecksum();
 }
 
@@ -42,17 +56,6 @@ bool Message::isTransparent() const {
     default:
       return false;
   }
-}
-
-uint8_t Message::m_calcChecksum() const {
-  auto it(m_data.get());
-  uint_fast8_t cs(it[IDX_START]), length(it[IDX_LENGTH]);
-
-  do {
-    cs -= *it++;
-  } while (--length);
-
-  return cs;
 }
 
 }  // namespace dongle
