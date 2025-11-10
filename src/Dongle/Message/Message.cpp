@@ -45,8 +45,8 @@ bool Message::isTransparent() const {
 }
 
 uint8_t Message::m_calcChecksum() const {
-  auto it(m_data.get());
-  uint_fast8_t length(m_data[IDX_LENGTH]), cs(SYM_START);
+  auto it(&m_data[IDX_START]);
+  uint_fast8_t length(m_data[IDX_LENGTH]), cs(*it);
 
   do {
     cs -= *it++;
