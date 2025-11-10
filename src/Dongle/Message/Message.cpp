@@ -30,11 +30,11 @@ void Message::finalize(ApplianceID appID, uint8_t protoID) {
 
 uint8_t Message::m_calcChecksum() const {
   auto it(m_data.get());
-  uint_fast8_t size(m_data[IDX_LENGTH]), cs(SYM_START);
+  uint_fast8_t length(m_data[IDX_LENGTH]), cs(SYM_START);
 
   do {
     cs -= *it++;
-  } while (--size);
+  } while (--length);
 
   return cs;
 }
