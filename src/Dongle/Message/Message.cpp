@@ -28,17 +28,6 @@ void Message::finalize(ApplianceID appID, uint8_t protoID) {
   m_data[length] = m_calcChecksum();
 }
 
-uint8_t Message::m_calcChecksum() const {
-  auto it(m_data.get());
-  uint_fast8_t length(m_data[IDX_LENGTH]), cs(SYM_START);
-
-  do {
-    cs -= *it++;
-  } while (--length);
-
-  return cs;
-}
-
 bool Message::isTransparent() const {
   switch (this->type()) {
     case MSG_CONTROL:
@@ -53,6 +42,17 @@ bool Message::isTransparent() const {
     default:
       return false;
   }
+}
+
+uint8_t Message::m_calcChecksum() const {
+  auto it(m_data.get());
+  uint_fast8_t length(m_data[IDX_LENGTH]), cs(SYM_START);
+
+  do {
+    cs -= *it++;
+  } while (--length);
+
+  return cs;
 }
 
 }  // namespace dongle
