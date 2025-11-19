@@ -2,7 +2,6 @@
 
 #include "Midea/Message/MideaData.hpp"
 
-namespace dongle {
 namespace midea {
 namespace ac {
 
@@ -74,4 +73,3 @@ class DataBodyControlB0 : public MideaData {
 
 }  // namespace ac
 }  // namespace midea
-}  // namespace dongle

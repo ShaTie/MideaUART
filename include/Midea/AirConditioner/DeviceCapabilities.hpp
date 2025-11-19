@@ -4,7 +4,6 @@
 #include "Midea/MideaCapabilities.hpp"
 #include "Midea/AirConditioner/Status/Types.hpp"
 
-namespace dongle {
 namespace midea {
 namespace ac {
 
@@ -299,4 +298,3 @@ class DeviceCapabilities : public MideaCapabilities {
 
 }  // namespace ac
 }  // namespace midea
-}  // namespace dongle

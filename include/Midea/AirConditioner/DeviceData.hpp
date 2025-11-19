@@ -2,7 +2,6 @@
 
 #include "Midea/Message/MideaData.hpp"
 
-namespace dongle {
 namespace midea {
 namespace ac {
 
@@ -50,4 +49,3 @@ class DeviceData : public MideaData {
 
 }  // namespace ac
 }  // namespace midea
-}  // namespace dongle

@@ -9,7 +9,6 @@
 #include "Helpers/Utils.hpp"
 #include "Helpers/IDGenerator.hpp"
 
-namespace dongle {
 namespace midea {
 
 /**
@@ -81,4 +80,3 @@ class MideaMessage : public Message {
 };
 
 }  // namespace midea
-}  // namespace dongle

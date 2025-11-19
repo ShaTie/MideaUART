@@ -7,7 +7,6 @@
 #include "Helpers/Timer.hpp"
 #include "Helpers/WifiNotifier.hpp"
 
-namespace dongle {
 namespace midea {
 
 /**
@@ -198,4 +197,3 @@ class MideaDevice {
 };
 
 }  // namespace midea
-}  // namespace dongle

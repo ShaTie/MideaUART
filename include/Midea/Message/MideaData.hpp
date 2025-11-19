@@ -4,7 +4,6 @@
 
 #include "Dongle/Message/MessageData.hpp"
 
-namespace dongle {
 namespace midea {
 
 /**
@@ -89,4 +88,3 @@ class MideaData : public MessageData {
 };
 
 }  // namespace midea
-}  // namespace dongle

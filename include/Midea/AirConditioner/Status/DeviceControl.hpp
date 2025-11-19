@@ -2,7 +2,6 @@
 
 #include "Midea/AirConditioner/Status/DeviceStatus.hpp"
 
-namespace dongle {
 namespace midea {
 namespace ac {
 
@@ -98,4 +97,3 @@ class DeviceControl : public ControllableStatus {
 
 }  // namespace ac
 }  // namespace midea
-}  // namespace dongle

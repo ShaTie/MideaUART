@@ -2,7 +2,6 @@
 
 #include <cstdint>
 
-namespace dongle {
 namespace midea {
 namespace ac {
 
@@ -127,4 +126,3 @@ enum TemperatureUnit : bool {
 
 }  // namespace ac
 }  // namespace midea
-}  // namespace dongle

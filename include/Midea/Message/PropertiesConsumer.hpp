@@ -2,7 +2,6 @@
 
 #include "Midea/Message/MideaData.hpp"
 
-namespace dongle {
 namespace midea {
 
 class Property {
@@ -67,4 +66,3 @@ class PropertiesConsumer {
 };
 
 }  // namespace midea
-}  // namespace dongle

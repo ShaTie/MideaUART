@@ -7,7 +7,6 @@
 #include "Helpers/Helpers.hpp"
 #include "Midea/AirConditioner/Status/DeviceStatus.hpp"
 
-namespace dongle {
 namespace midea {
 namespace ac {
 
@@ -125,4 +124,3 @@ class PropertiesStateQuery : public MideaData {
 
 }  // namespace ac
 }  // namespace midea
-}  // namespace dongle

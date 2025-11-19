@@ -3,7 +3,6 @@
 #include "Midea/AirConditioner/Status/Types.hpp"
 #include "Midea/AirConditioner/Status/DeviceTimers.hpp"
 
-namespace dongle {
 namespace midea {
 namespace ac {
 
@@ -354,4 +353,3 @@ struct MessageC1 {
 
 }  // namespace ac
 }  // namespace midea
-}  // namespace dongle

@@ -2,7 +2,6 @@
 
 #include <cstdint>
 
-namespace dongle {
 namespace midea {
 namespace ac {
 
@@ -68,4 +67,3 @@ class DeviceTimers {
 
 }  // namespace ac
 }  // namespace midea
-}  // namespace dongle
