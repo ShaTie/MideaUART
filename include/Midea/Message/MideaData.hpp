@@ -15,12 +15,12 @@ using PropertyUUID = uint16_t;
 /**
  * @brief Midea appliance transparent message.
  */
-class MideaData : public MessageData {
-  using MessageData::MessageData;
+class MideaData : public dongle::MessageData {
+  using dongle::MessageData::MessageData;
   friend class PropertiesConsumer;
 
  public:
-  explicit MideaData(std::initializer_list<uint8_t> x) : MessageData(std::move(x)) { m_finalize(); }
+  explicit MideaData(std::initializer_list<uint8_t> x) : dongle::MessageData(std::move(x)) { m_finalize(); }
 
   uint8_t typeID() const { return m_data[IDX_TYPE]; }
   bool assign_status(MideaData &&data);

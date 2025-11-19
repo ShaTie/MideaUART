@@ -2,6 +2,7 @@
 
 #include <deque>
 #include <memory>
+
 #include "Dongle/Message/MessageReaderWriter.hpp"
 #include "Helpers/Logger.hpp"
 #include "Helpers/Timer.hpp"

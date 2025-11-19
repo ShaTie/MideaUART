@@ -7,6 +7,7 @@
 #include <utility>
 #include <string>
 #include <cstring>
+
 #include "Helpers/IdGenerator.hpp"
 #include "Helpers/Utils.hpp"
 #include "Dongle/Message/MessageHeader.hpp"

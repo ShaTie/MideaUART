@@ -65,16 +65,16 @@ enum MideaTypeID : uint8_t {
  * @brief Message class.
  *
  */
-class MideaMessage : public Message {
+class MideaMessage : public dongle::Message {
  public:
   MideaMessage(MideaTypeID typeID, size_t data_size) : Message(s_type(typeID), data_size + 2) { m_at(0) = typeID; }
-  static MessageTypeID s_type(MideaTypeID mideaID) {
+  static dongle::MessageTypeID s_type(MideaTypeID mideaID) {
     switch (mideaID) {
       case MSG_SET_STATUS:
       case MSG_SET_PROPERTIES:
-        return MSG_CONTROL;
+        return dongle::MSG_CONTROL;
       default:
-        return MSG_QUERY;
+        return dongle::MSG_QUERY;
     }
   }
 };
