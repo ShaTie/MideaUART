@@ -56,10 +56,10 @@ class MessageReaderWriter : public Message {
   helpers::IDGenerator m_id;
 
   // Appliance ID
-  ApplianceID m_appID{APP_BROADCAST};
+  uint8_t m_appID{0xFF};
 
   // Protocol ID
-  uint8_t m_protoID{};
+  uint8_t m_protoID{0x00};
 
  private:
   // Updates appliance ID

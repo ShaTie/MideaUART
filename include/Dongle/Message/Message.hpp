@@ -216,6 +216,8 @@ class Message {
    */
   void finalize(uint8_t appID, uint8_t protoID);
 
+  bool isResponse(const Message &x) const { return (x.typeID() == typeID()) && (!x.id() || (x.id() == id())); }
+
   /**
    * @brief Access for element by index.
    *
@@ -274,27 +276,27 @@ class Message {
    *
    * @return message type.
    */
-  MessageTypeID type() const { return MessageTypeID(m_data[IDX_TYPE]); }
+  MessageTypeID typeID() const { return MessageTypeID(m_data[IDX_TYPE]); }
 
   /**
-   * @brief Check message type.
+   * @brief Checks message type.
    *
-   * @param value message type.
+   * @param x Message type.
    * @return `true` if message has specified type.
    */
-  bool hasType(MessageTypeID type) const { return this->type() == type; }
+  bool hasTypeID(MessageTypeID x) const { return this->typeID() == x; }
 
   /**
-   * @brief Message ID.
+   * @brief Gets message ID.
    *
-   * @return message ID.
+   * @return Message ID.
    */
   uint8_t id() const { return m_data[IDX_ID]; }
 
   /**
-   * @brief Protocol ID.
+   * @brief Gets protocol ID.
    *
-   * @return protocol ID.
+   * @return Protocol ID.
    */
   uint8_t protocolID() const { return m_data[IDX_PROTOCOL]; }
 

@@ -21,9 +21,9 @@ class MideaData : public MessageData {
   friend class PropertiesConsumer;
 
  public:
-  uint8_t typeID() const { return m_data[IDX_TYPE]; }
   explicit MideaData(std::initializer_list<uint8_t> x) : MessageData(std::move(x)) { m_finalize(); }
 
+  uint8_t typeID() const { return m_data[IDX_TYPE]; }
   bool assign_status(MideaData &&data);
 
   /**

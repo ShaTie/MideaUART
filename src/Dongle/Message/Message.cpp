@@ -43,7 +43,7 @@ void Message::finalize(uint8_t appID, uint8_t protoID) {
 }
 
 bool Message::isTransparent() const {
-  switch (this->type()) {
+  switch (this->typeID()) {
     case MSG_CONTROL:
     case MSG_QUERY:
     case MSG_NOTIFY_STATUS:

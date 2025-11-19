@@ -9,14 +9,14 @@ namespace ac {
 
 /* ControllableStatusOld */
 
-static auto static_target_temperature(const MessageC0 &c0) -> uint8_t {
+static auto prvGetTargetTemperature(const MessageC0 &c0) -> uint8_t {
   uint_fast8_t value(c0.newTemp ? (c0.newTemp + 12) : (c0.oldTemp + 16));
   return value * 2 + c0.dotTemp;
 }
 
-static auto static_target_temperature(const MessageA0 &a0) -> uint8_t { return 24 + a0.newTemp * 2 + a0.dotTemp; }
+static auto prvGetTargetTemperature(const MessageA0 &a0) -> uint8_t { return 24 + a0.newTemp * 2 + a0.dotTemp; }
 
-template<typename T> static auto static_get_preset(const T &s) {
+template<typename T> static auto prvGetPreset(const T &s) {
   if (s.sleepFunc)
     return PRESET_SLEEP;
 
@@ -37,11 +37,11 @@ template<typename T> auto ControllableStatusOld::m_update(const T &s) {
   m_mode = s.mode;
   m_hSwing = bool(s.leftRightFan);
   m_vSwing = bool(s.updownFan);
-  m_targetTemp = static_target_temperature(s);
+  m_targetTemp = prvGetTargetTemperature(s);
   m_fanSpeed = s.fanSpeed;
   m_humidity = s.humidity;
   m_timers = s.timers;
-  m_preset = static_get_preset(s);
+  m_preset = prvGetPreset(s);
 }
 
 auto ControllableStatusOld::getTargetTemp() const -> float { return m_targetTemp * 0.5F; }
@@ -69,7 +69,7 @@ auto ControllableStatusOld::getFanSpeedEnum() const -> FanSpeed {
  * If not supported, always equals `0`.
  * @return Temperature in °C.
  */
-static auto static_get_temp(int value, int decimal) -> float {
+static auto prvGetTemp(int value, int decimal) -> float {
   // Checking for `NaN`
   if (value == 0xFF)
     return std::numeric_limits<float>::quiet_NaN();
@@ -109,13 +109,13 @@ auto ReadableStatusOld::m_update(const MessageA0 &a0) -> void {
 }
 
 auto ReadableStatusOld::m_update(const MessageA1 &a1) -> void {
-  m_indoorTemp = static_get_temp(a1.inTemp, 0);
-  m_outdoorTemp = static_get_temp(a1.outTemp, 0);
+  m_indoorTemp = prvGetTemp(a1.inTemp, 0);
+  m_outdoorTemp = prvGetTemp(a1.outTemp, 0);
 }
 
 auto ReadableStatusOld::m_update(const MessageC0 &c0) -> void {
-  m_indoorTemp = static_get_temp(c0.inTemp, c0.inTempDec);
-  m_outdoorTemp = static_get_temp(c0.outTemp, c0.outTempDec);
+  m_indoorTemp = prvGetTemp(c0.inTemp, c0.inTempDec);
+  m_outdoorTemp = prvGetTemp(c0.outTemp, c0.outTempDec);
   errInfo = c0.errInfo;
   dusFull = c0.dusFull;
   light = !c0.light;

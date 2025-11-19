@@ -16,7 +16,7 @@ bool DeviceCapabilities::isQueryNeeded() const {
          m_hasIndoorHumidity || m_hasVerticalWind || m_hasHorizontalWind || m_isTwins || m_isFourDirection;
 }
 
-static auto static_mode(uint_fast8_t x) {
+static auto prvMode(uint_fast8_t x) {
   switch (x) {
     case 1:
       return 0b1111;  // DRY | HEAT | AUTO | COOL
@@ -33,7 +33,7 @@ static auto static_mode(uint_fast8_t x) {
   }
 }
 
-static auto static_swing(uint_fast8_t x) {
+static auto prvSwing(uint_fast8_t x) {
   switch (x) {
     case 1:
       return 0b11;  // HORIZONTAL | VERTICAL
@@ -46,7 +46,7 @@ static auto static_swing(uint_fast8_t x) {
   }
 }
 
-static auto static_fan_speed(uint_fast8_t x) {
+static auto prvFanSpeed(uint_fast8_t x) {
   switch (x) {
     case 1:
       return 0b11111;  // RAW | AUTO | HIGH | MEDIUM | LOW
@@ -63,7 +63,7 @@ static auto static_fan_speed(uint_fast8_t x) {
   }
 }
 
-static auto static_dry_smart(uint_fast8_t x) {
+static auto prvDrySmart(uint_fast8_t x) {
   switch (x) {
     case 1:
       return 0b01;  // AUTO
@@ -76,7 +76,7 @@ static auto static_dry_smart(uint_fast8_t x) {
   }
 }
 
-static auto static_turbo(uint_fast8_t x) {
+static auto prvTurbo(uint_fast8_t x) {
   switch (x) {
     case 0:
       return 0b01;  // COOL
@@ -89,7 +89,7 @@ static auto static_turbo(uint_fast8_t x) {
   }
 }
 
-static auto static_power(uint_fast8_t x) {
+static auto prvPower(uint_fast8_t x) {
   switch (x) {
     case 2:
       return 0b01;
@@ -100,7 +100,7 @@ static auto static_power(uint_fast8_t x) {
   }
 }
 
-static auto static_filter(uint_fast8_t x) {
+static auto prvFilter(uint_fast8_t x) {
   switch (x) {
     case 0:
       return 0b00;
@@ -113,7 +113,7 @@ static auto static_filter(uint_fast8_t x) {
   }
 }
 
-static auto static_eco(uint_fast8_t x) {
+static auto prvEco(uint_fast8_t x) {
   switch (x) {
     case 1:
       return 0b01;
@@ -193,28 +193,28 @@ auto DeviceCapabilities::m_onProperty(const Property &x) -> void {
       m_temp(x.data());
       break;
     case CapabilityUUID::UUID_MODES:
-      m_hasMode = static_mode(data);
+      m_hasMode = prvMode(data);
       break;
     case CapabilityUUID::UUID_SWING:
-      m_hasSwing = static_swing(data);
+      m_hasSwing = prvSwing(data);
       break;
     case CapabilityUUID::UUID_FAN:
-      m_hasFan = static_fan_speed(data);
+      m_hasFan = prvFanSpeed(data);
       break;
     case CapabilityUUID::UUID_DRY:
-      m_hasDrySmart = static_dry_smart(data);
+      m_hasDrySmart = prvDrySmart(data);
       break;
     case CapabilityUUID::UUID_TURBO:
-      m_hasTurbo = static_turbo(data);
+      m_hasTurbo = prvTurbo(data);
       break;
     case CapabilityUUID::UUID_ECO:
-      m_hasEco = static_eco(data);
+      m_hasEco = prvEco(data);
       break;
     case CapabilityUUID::UUID_POWER:
-      m_hasPower = static_power(data);
+      m_hasPower = prvPower(data);
       break;
     case CapabilityUUID::UUID_FILTER:
-      m_hasFilter = static_filter(data);
+      m_hasFilter = prvFilter(data);
       break;
     case CapabilityUUID::UUID_FAHRENHEIT:
       m_unitChangeable = !nzero;  // not mistake. 0 is true.

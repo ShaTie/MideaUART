@@ -10,7 +10,7 @@ using helpers::IDGenerator;
 static const char *const TAG = "MessageReaderWriter";
 
 inline void MessageReaderWriter::m_updAppID() {
-  auto appID = ApplianceID(m_data[IDX_APPLIANCE]);
+  auto appID(m_data[IDX_APPLIANCE]);
 
   if (appID == m_appID)
     return;

@@ -2,7 +2,7 @@
 
 namespace helpers {
 
-static unsigned static_rssi_to_level(int rssi) {
+static unsigned prvRssiLevel(int rssi) {
   if (rssi >= -50)
     return 4;
 
@@ -15,17 +15,17 @@ static unsigned static_rssi_to_level(int rssi) {
   return 1;
 }
 
-static unsigned static_get_level() {
+static unsigned prvGetLevel() {
   int rssi;
 #if defined(IDF_VER)
   esp_wifi_sta_get_rssi(&rssi);
 #elif defined(USE_ARDUINO)
   rssi = WiFi.RSSI();
 #endif
-  return static_rssi_to_level(rssi);
+  return prvRssiLevel(rssi);
 }
 
-int WifiNotifierBase::level() const { return this->connected() ? static_get_level() : 0; }
+int WifiNotifierBase::level() const { return this->connected() ? prvGetLevel() : 0; }
 
 WifiNotifierBase::WifiNotifierBase(TimerTick period) : m_ip(0), m_timer(period, true, [this](Timer *) { m_update(); }) {
 #if defined(USE_ARDUINO)

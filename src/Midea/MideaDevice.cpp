@@ -32,7 +32,7 @@ MideaDevice::MideaDevice()
       })) {}
 
 ResponseStatus MideaDevice::Request::callHandler(const Message &s) {
-  if (!s.hasType(this->requestType))
+  if (!s.hasTypeID(this->requestType))
     return ResponseStatus::RESPONSE_WRONG;
 
   if (this->onData == nullptr)
@@ -103,11 +103,11 @@ void MideaDevice::m_handler(const Message &s) {
   }
 
   // ignoring responses on network notifies
-  if (s.hasType(MSG_NOTIFY_NETWORK_STATUS))
+  if (s.hasTypeID(MSG_NOTIFY_NETWORK_STATUS))
     return;
 
   /* HANDLE REQUESTS */
-  if (s.hasType(MSG_GET_NETWORK_STATUS)) {
+  if (s.hasTypeID(MSG_GET_NETWORK_STATUS)) {
     m_sendNetworkNotify(MSG_GET_NETWORK_STATUS);
     return;
   }
