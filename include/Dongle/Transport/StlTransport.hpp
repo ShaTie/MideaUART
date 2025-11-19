@@ -22,7 +22,7 @@ class StlTransport : public ITransport {
    * @param data destination byte.
    * @return `true` on success.
    */
-  bool read(char &data) override { return bool(m_io.get(data)); }
+  bool read(char &data) final override { return static_cast<bool>(m_io.get(data)); }
 
   /**
    * @brief Writes data to the stream.
@@ -30,7 +30,9 @@ class StlTransport : public ITransport {
    * @param data_length length of array.
    * @return `true` on success.
    */
-  bool write(const char *data, size_t data_length) override { return bool(m_io.write(data, data_length)); }
+  bool write(const char *data, size_t data_length) final override {
+    return static_cast<bool>(m_io.write(data, data_length));
+  }
 
  private:
   /// STL stream instance.
