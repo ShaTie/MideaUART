@@ -1,7 +1,6 @@
 #include "Midea/AirConditioner/Status/DeviceControl.hpp"
 #include "Dongle/Message/Message.hpp"
 
-namespace dongle {
 namespace midea {
 namespace ac {
 
@@ -122,4 +121,3 @@ auto DeviceControl::setStatusQuery() const -> DeviceData {
 
 }  // namespace ac
 }  // namespace midea
-}  // namespace dongle

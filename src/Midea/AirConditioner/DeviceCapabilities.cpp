@@ -5,7 +5,6 @@
 #include "Helpers/Helpers.hpp"
 #include "Helpers/Logger.hpp"
 
-namespace dongle {
 namespace midea {
 namespace ac {
 
@@ -349,4 +348,3 @@ auto DeviceCapabilities::dump() const -> void {
 
 }  // namespace ac
 }  // namespace midea
-}  // namespace dongle

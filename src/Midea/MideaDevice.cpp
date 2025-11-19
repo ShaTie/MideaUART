@@ -1,7 +1,6 @@
 #include "Midea/MideaDevice.hpp"
 #include "Helpers/Logger.hpp"
 
-namespace dongle {
 namespace midea {
 
 using helpers::Timer;
@@ -163,4 +162,3 @@ void MideaDevice::setBeeper(bool value) {
 }
 
 }  // namespace midea
-}  // namespace dongle

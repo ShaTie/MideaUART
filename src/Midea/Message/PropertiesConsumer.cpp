@@ -1,6 +1,5 @@
 #include "Midea/Message/PropertiesConsumer.hpp"
 
-namespace dongle {
 namespace midea {
 
 class PropertiesReader : public Property {
@@ -27,4 +26,3 @@ unsigned PropertiesConsumer::update(const MideaData &x) {
 }
 
 }  // namespace midea
-}  // namespace dongle

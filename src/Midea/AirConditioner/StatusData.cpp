@@ -1,7 +1,6 @@
 #include "Midea/AirConditioner/StatusData.hpp"
 #include "Midea/AirConditioner/DeviceCapabilities.hpp"
 
-namespace dongle {
 namespace midea {
 namespace ac {
 
@@ -166,4 +165,3 @@ PropertiesStateQuery::PropertiesStateQuery(const DeviceCapabilities &s) : MideaD
 
 }  // namespace ac
 }  // namespace midea
-}  // namespace dongle

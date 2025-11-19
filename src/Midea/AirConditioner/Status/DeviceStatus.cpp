@@ -3,7 +3,6 @@
 #include "Midea/AirConditioner/Status/DeviceStatus.hpp"
 #include "Midea/Message/PropertiesConsumer.hpp"
 
-namespace dongle {
 namespace midea {
 namespace ac {
 
@@ -225,4 +224,3 @@ auto ac::ControllableStatusNew::m_onProperty(const Property &x) -> void {
 
 }  // namespace ac
 }  // namespace midea
-}  // namespace dongle

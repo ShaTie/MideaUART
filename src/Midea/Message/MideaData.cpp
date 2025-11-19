@@ -1,6 +1,5 @@
 #include "Midea/Message/MideaData.hpp"
 
-namespace dongle {
 namespace midea {
 
 void MideaData::m_finalize() {
@@ -63,4 +62,3 @@ bool MideaData::assign_status(MideaData &&data) {
 }
 
 }  // namespace midea
-}  // namespace dongle

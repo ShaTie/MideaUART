@@ -1,6 +1,5 @@
 #include "Midea/AirConditioner/Status/DeviceTimers.hpp"
 
-namespace dongle {
 namespace midea {
 namespace ac {
 
@@ -29,4 +28,3 @@ auto DeviceTimers::setTimeOff(unsigned minutes) -> void { m_timeOffLow = prvSetT
 
 }  // namespace ac
 }  // namespace midea
-}  // namespace dongle
