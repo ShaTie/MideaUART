@@ -3,7 +3,7 @@
 
 namespace helpers {
 
-uint8_t Utils::crc8maxim(const uint8_t *begin, const uint8_t *end) {
+uint8_t Utils::crc8maxim(const uint8_t *data, size_t size) {
   static const uint8_t CRC8_MAXIM_TABLE[] PROGMEM = {
       0x00, 0x5E, 0xBC, 0xE2, 0x61, 0x3F, 0xDD, 0x83, 0xC2, 0x9C, 0x7E, 0x20, 0xA3, 0xFD, 0x1F, 0x41, 0x9D, 0xC3, 0x21,
       0x7F, 0xFC, 0xA2, 0x40, 0x1E, 0x5F, 0x01, 0xE3, 0xBD, 0x3E, 0x60, 0x82, 0xDC, 0x23, 0x7D, 0x9F, 0xC1, 0x42, 0x1C,
@@ -23,10 +23,11 @@ uint8_t Utils::crc8maxim(const uint8_t *begin, const uint8_t *end) {
 
   static_assert(sizeof(CRC8_MAXIM_TABLE) == 256, "CRC table size must be 256 bytes.");
 
-  uint8_t crc(0);
+  uint_fast8_t crc(0);
 
-  for (auto it(begin); it != end; ++it)
-    crc = pgm_read_byte(CRC8_MAXIM_TABLE + (*it ^ crc));
+  do {
+    crc = pgm_read_byte(CRC8_MAXIM_TABLE + (*data++ ^ crc));
+  } while (--size);
 
   return crc;
 }
