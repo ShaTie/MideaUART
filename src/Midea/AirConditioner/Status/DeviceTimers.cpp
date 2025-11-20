@@ -4,11 +4,11 @@ namespace midea {
 namespace ac {
 
 // High byte base value
-static const uint8_t HIGH_BASE(0x7F);
+static const auto HIGH_BASE(0x7F);
 
-static auto prvGetTime(uint8_t high, uint8_t low) { return 15U * (high - HIGH_BASE) - low; }
+static auto prvGetTime(auto high, auto low) { return 15U * (high - HIGH_BASE) - low; }
 
-static auto prvSetTime(uint8_t &high, unsigned minutes) {
+static auto prvSetTime(auto &high, auto minutes) {
   high = HIGH_BASE;
 
   if (minutes == 0)
