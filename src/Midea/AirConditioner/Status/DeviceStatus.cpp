@@ -31,7 +31,7 @@ static auto prvPreset(const auto &x) -> Preset {
   return PRESET_NONE;
 }
 
-auto ControllableStatusOld::m_update(const auto &x) {
+inline auto ControllableStatusOld::m_update(const auto &x) {
   m_power = x.power;
   m_mode = x.mode;
   m_hSwing = static_cast<bool>(x.leftRightFan);
@@ -85,7 +85,7 @@ static auto prvInOutTemperature(int value, int decimal) -> float {
   return (value + decimal) * 0.1F;
 }
 
-auto ReadableStatusOld::m_update(const MessageA0 &a0) -> void {
+inline auto ReadableStatusOld::m_update(const MessageA0 &a0) -> void {
   light = !a0.light;
 
   // STORE UNKNOWN FLAGS
@@ -105,12 +105,12 @@ auto ReadableStatusOld::m_update(const MessageA0 &a0) -> void {
   doubleTemp = a0.doubleTemp;
 }
 
-auto ReadableStatusOld::m_update(const MessageA1 &a1) -> void {
+inline auto ReadableStatusOld::m_update(const MessageA1 &a1) -> void {
   m_indoorTemp = prvInOutTemperature(a1.inTemp, 0);
   m_outdoorTemp = prvInOutTemperature(a1.outTemp, 0);
 }
 
-auto ReadableStatusOld::m_update(const MessageC0 &c0) -> void {
+inline auto ReadableStatusOld::m_update(const MessageC0 &c0) -> void {
   m_indoorTemp = prvInOutTemperature(c0.inTemp, c0.inTempDec);
   m_outdoorTemp = prvInOutTemperature(c0.outTemp, c0.outTempDec);
   errInfo = c0.errInfo;
@@ -138,7 +138,7 @@ auto ReadableStatusOld::m_update(const MessageC0 &c0) -> void {
   doubleTemp = c0.doubleTemp;
 }
 
-auto ReadableStatusOld::m_update(const MessageC1 &c1) -> void {
+inline auto ReadableStatusOld::m_update(const MessageC1 &c1) -> void {
   // Reads 6-digit BCD number (3 bytes) into an integer.
   auto bcd2uint([](auto bcd) {
     auto k([](auto x) { return x / 16 * 10 + x % 16; });
