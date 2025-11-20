@@ -31,7 +31,7 @@ static auto prvPreset(const auto &x) -> Preset {
   return PRESET_NONE;
 }
 
-auto ControllableStatusOld::m_update(const auto &x) -> void {
+auto ControllableStatusOld::m_update(const auto &x) {
   m_power = x.power;
   m_mode = x.mode;
   m_hSwing = static_cast<bool>(x.leftRightFan);
