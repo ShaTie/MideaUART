@@ -6,7 +6,7 @@
 namespace midea {
 namespace ac {
 
-struct MessageA0 {
+struct StatusA0 {
   /* Byte #0 */
 
   uint8_t id;
@@ -136,7 +136,7 @@ struct MessageA0 {
   uint8_t : 4;
 };
 
-struct MessageA1 {
+struct StatusA1 {
   /* Byte #0-12 */
 
   uint8_t id;
@@ -164,7 +164,7 @@ struct MessageA1 {
 /**
  * @brief Device state `0xC0` message body. Size: 22 bytes.
  */
-struct MessageC0 {
+struct StatusC0 {
   // Byte #0
 
   uint8_t id;
@@ -340,7 +340,7 @@ struct MessageC0 {
   uint8_t : 4;
 };
 
-struct MessageC1 {
+struct StatusC1 {
   /* Byte #0-15 */
 
   uint8_t id;

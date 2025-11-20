@@ -9,12 +9,12 @@ namespace ac {
 
 /* ControllableStatusOld */
 
-static auto prvTargetTemperature(const MessageC0 &c0) -> uint8_t {
+static auto prvTargetTemperature(const StatusC0 &c0) -> uint8_t {
   uint_fast8_t value(c0.newTemp ? (c0.newTemp + 12) : (c0.oldTemp + 16));
   return value * 2 + c0.dotTemp;
 }
 
-static auto prvTargetTemperature(const MessageA0 &a0) -> uint8_t { return 24 + a0.newTemp * 2 + a0.dotTemp; }
+static auto prvTargetTemperature(const StatusA0 &a0) -> uint8_t { return 24 + a0.newTemp * 2 + a0.dotTemp; }
 
 static auto prvPreset(const auto &x) -> Preset {
   if (x.sleepFunc)
@@ -44,7 +44,7 @@ inline auto ControllableStatusOld::m_update(const auto &x) {
   m_preset = prvPreset(x);
 }
 
-inline auto ControllableStatusOld::m_update(const MessageA1 &a1) { m_humidity = a1.humidity; }
+inline auto ControllableStatusOld::m_update(const StatusA1 &a1) { m_humidity = a1.humidity; }
 
 auto ControllableStatusOld::getFanSpeedEnum() const -> FanSpeed {
   if (m_fanSpeed <= 50)
@@ -88,7 +88,7 @@ static auto prvInOutTemperature(int value, int decimal) -> float {
   return (value + decimal) * 0.1F;
 }
 
-inline auto ReadableStatusOld::m_update(const MessageA0 &a0) {
+inline auto ReadableStatusOld::m_update(const StatusA0 &a0) {
   light = !a0.light;
 
   // STORE UNKNOWN FLAGS
@@ -108,12 +108,12 @@ inline auto ReadableStatusOld::m_update(const MessageA0 &a0) {
   doubleTemp = a0.doubleTemp;
 }
 
-inline auto ReadableStatusOld::m_update(const MessageA1 &a1) {
+inline auto ReadableStatusOld::m_update(const StatusA1 &a1) {
   m_indoorTemp = prvInOutTemperature(a1.inTemp, 0);
   m_outdoorTemp = prvInOutTemperature(a1.outTemp, 0);
 }
 
-inline auto ReadableStatusOld::m_update(const MessageC0 &c0) {
+inline auto ReadableStatusOld::m_update(const StatusC0 &c0) {
   m_indoorTemp = prvInOutTemperature(c0.inTemp, c0.inTempDec);
   m_outdoorTemp = prvInOutTemperature(c0.outTemp, c0.outTempDec);
   errInfo = c0.errInfo;
@@ -141,7 +141,7 @@ inline auto ReadableStatusOld::m_update(const MessageC0 &c0) {
   doubleTemp = c0.doubleTemp;
 }
 
-inline auto ReadableStatusOld::m_update(const MessageC1 &c1) {
+inline auto ReadableStatusOld::m_update(const StatusC1 &c1) {
   // Reads 6-digit BCD number (3 bytes) into an integer.
   auto bcd2uint([](auto bcd) {
     auto k([](auto x) { return x / 16 * 10 + x % 16; });
@@ -174,28 +174,28 @@ auto ControllableStatusNew::getDirectionEnum(unsigned x) -> AirFlowDirection {
 auto DeviceStatus::m_update(const MideaData &x) -> bool {
   switch (x.typeID()) {
     case 0xC0: {
-      auto &s(x.ref<MessageC0>());
+      auto &s(x.ref<StatusC0>());
       ControllableStatusOld::m_update(s);
       ReadableStatusOld::m_update(s);
       return true;
     }
 
     case 0xA0: {
-      auto &s(x.ref<MessageA0>());
+      auto &s(x.ref<StatusA0>());
       ControllableStatusOld::m_update(s);
       ReadableStatusOld::m_update(s);
       return true;
     }
 
     case 0xA1: {
-      auto &s(x.ref<MessageA1>());
+      auto &s(x.ref<StatusA1>());
       ControllableStatusOld::m_update(s);
       ReadableStatusOld::m_update(s);
       return true;
     }
 
     case 0xC1: {
-      auto &s(x.ref<MessageC1>());
+      auto &s(x.ref<StatusC1>());
       ReadableStatusOld::m_update(s);
       return true;
     }

@@ -9,10 +9,10 @@
 namespace midea {
 namespace ac {
 
-class MessageA0;
-class MessageA1;
-class MessageC0;
-class MessageC1;
+class StatusA0;
+class StatusA1;
+class StatusC0;
+class StatusC1;
 
 /**
  * @brief Device control settings. Stored in the device instance, copied to the control object instance to allow for
@@ -163,7 +163,7 @@ class ControllableStatusOld {
 
   /* inline update methods used in `DeviceStatus` class */
   auto m_update(const auto &x);
-  auto m_update(const MessageA1 &a1);
+  auto m_update(const StatusA1 &a1);
 };
 
 /**
@@ -239,10 +239,10 @@ class ReadableStatusOld {
 
  protected:
   /* inline update methods used in `DeviceStatus` class */
-  auto m_update(const MessageA0 &x);
-  auto m_update(const MessageA1 &x);
-  auto m_update(const MessageC0 &x);
-  auto m_update(const MessageC1 &x);
+  auto m_update(const StatusA0 &x);
+  auto m_update(const StatusA1 &x);
+  auto m_update(const StatusC0 &x);
+  auto m_update(const StatusC1 &x);
 };
 
 /**
