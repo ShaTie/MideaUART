@@ -34,8 +34,8 @@ template<typename T> static auto prvPreset(const T &s) {
 template<typename T> auto ControllableStatusOld::m_update(const T &s) {
   m_power = s.power;
   m_mode = s.mode;
-  m_hSwing = bool(s.leftRightFan);
-  m_vSwing = bool(s.updownFan);
+  m_hSwing = static_cast<bool>(s.leftRightFan);
+  m_vSwing = static_cast<bool>(s.updownFan);
   m_targetTemp = prvTargetTemperature(s);
   m_fanSpeed = s.fanSpeed;
   m_humidity = s.humidity;
