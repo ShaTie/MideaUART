@@ -21,9 +21,9 @@ static auto prvSetTime(auto &high, auto minutes) {
 }
 
 auto DeviceTimers::getTimeOn() const -> unsigned { return prvGetTime(m_timeOnHigh, m_timeOnLow); }
-auto DeviceTimers::getTimeOff() const -> unsigned { return prvGetTime(m_timeOffHigh, m_timeOffLow); }
-
 auto DeviceTimers::setTimeOn(unsigned minutes) -> void { m_timeOnLow = prvSetTime(m_timeOnHigh, minutes); }
+
+auto DeviceTimers::getTimeOff() const -> unsigned { return prvGetTime(m_timeOffHigh, m_timeOffLow); }
 auto DeviceTimers::setTimeOff(unsigned minutes) -> void { m_timeOffLow = prvSetTime(m_timeOffHigh, minutes); }
 
 }  // namespace ac
