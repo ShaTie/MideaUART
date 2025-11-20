@@ -191,10 +191,10 @@ class ReadableStatusOld {
   auto ledDisplayStatus() const { return light; }
 
  protected:
-  void m_update(const MessageC0 &x);
-  void m_update(const MessageC1 &x);
-  void m_update(const MessageA0 &x);
-  void m_update(const MessageA1 &x);
+  auto m_update(const MessageC0 &x);
+  auto m_update(const MessageC1 &x);
+  auto m_update(const MessageA0 &x);
+  auto m_update(const MessageA1 &x);
 
  private:
   /// Real-time power. Unit : Watt.
