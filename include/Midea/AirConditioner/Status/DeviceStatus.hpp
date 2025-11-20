@@ -137,8 +137,6 @@ class ControllableStatusOld {
   auto isTimeOff() const { return m_timers.isTimeOff(); }
 
  protected:
-  auto m_update(const auto &x);
-  auto m_update(const MessageA1 &a1) { m_humidity = a1.humidity; }
   /// Power status: `ON/OFF`.
   bool m_power : 1;
   /// Operation mode.
@@ -157,6 +155,10 @@ class ControllableStatusOld {
   uint8_t m_humidity;
   /// ON/OFF timers.
   DeviceTimers m_timers;
+
+  /* inline update methods used in `DeviceStatus` class */
+  auto m_update(const auto &x);
+  auto m_update(const MessageA1 &a1) { m_humidity = a1.humidity; }
 };
 
 /**
@@ -189,12 +191,6 @@ class ReadableStatusOld {
    * @return LED display status.
    */
   auto ledDisplayStatus() const { return light; }
-
- protected:
-  auto m_update(const MessageC0 &x);
-  auto m_update(const MessageC1 &x);
-  auto m_update(const MessageA0 &x);
-  auto m_update(const MessageA1 &x);
 
  private:
   /// Real-time power. Unit : Watt.
@@ -235,6 +231,13 @@ class ReadableStatusOld {
 
   uint8_t setExpand : 6;
   bool doubleTemp : 1;
+
+ protected:
+  /* inline update methods used in `DeviceStatus` class */
+  auto m_update(const MessageA0 &x);
+  auto m_update(const MessageA1 &x);
+  auto m_update(const MessageC0 &x);
+  auto m_update(const MessageC1 &x);
 };
 
 /**
