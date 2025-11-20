@@ -13,7 +13,7 @@ class DeviceTimers {
   /**
    * @brief Default constructor. Initializes both timers as inactive.
    */
-  DeviceTimers() : m_timeOnHigh(0x7F), m_timeOffHigh(0x7F), m_timeOffLow(0), m_timeOnLow(0) {}
+  DeviceTimers() = default;
 
   /**
    * @brief Constructor with initial timer values.
@@ -59,10 +59,14 @@ class DeviceTimers {
   auto setTimeOff(unsigned minutes) -> void;
 
  private:
-  uint8_t m_timeOnHigh;
-  uint8_t m_timeOffHigh;
-  uint8_t m_timeOffLow : 4;
-  uint8_t m_timeOnLow : 4;
+  uint8_t m_timeOnHigh{HIGH_BASE};
+  uint8_t m_timeOffHigh{HIGH_BASE};
+  uint8_t m_timeOffLow : 4 {0};
+  uint8_t m_timeOnLow : 4 {0};
+
+  static constexpr auto HIGH_BASE{0x7F};
+  static auto prvGetTime(auto high, auto low);
+  static auto prvSetTime(auto &high, auto minutes);
 };
 
 }  // namespace ac

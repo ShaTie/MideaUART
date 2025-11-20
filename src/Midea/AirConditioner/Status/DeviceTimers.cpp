@@ -3,12 +3,9 @@
 namespace midea {
 namespace ac {
 
-// High byte base value
-static constexpr auto HIGH_BASE{0x7F};
+inline auto DeviceTimers::prvGetTime(auto high, auto low) { return 15U * (high - HIGH_BASE) - low; }
 
-static auto prvGetTime(auto high, auto low) { return 15U * (high - HIGH_BASE) - low; }
-
-static auto prvSetTime(auto &high, auto minutes) {
+inline auto DeviceTimers::prvSetTime(auto &high, auto minutes) {
   high = HIGH_BASE;
 
   if (minutes == 0)
