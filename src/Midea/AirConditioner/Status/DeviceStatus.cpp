@@ -1,6 +1,7 @@
 #include <limits>
 
 #include "Midea/AirConditioner/Status/DeviceStatus.hpp"
+#include "Midea/AirConditioner/Status/DeviceStatusNative.hpp"
 #include "Midea/Message/PropertiesConsumer.hpp"
 
 namespace midea {
@@ -42,6 +43,8 @@ inline auto ControllableStatusOld::m_update(const auto &x) {
   m_timers = x.timers;
   m_preset = prvPreset(x);
 }
+
+inline auto ControllableStatusOld::m_update(const MessageA1 &a1) { m_humidity = a1.humidity; }
 
 auto ControllableStatusOld::getFanSpeedEnum() const -> FanSpeed {
   if (m_fanSpeed <= 50)
