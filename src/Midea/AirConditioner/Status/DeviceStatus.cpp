@@ -15,32 +15,32 @@ static auto prvTargetTemperature(const MessageC0 &c0) -> uint8_t {
 
 static auto prvTargetTemperature(const MessageA0 &a0) -> uint8_t { return 24 + a0.newTemp * 2 + a0.dotTemp; }
 
-template<typename T> static auto prvPreset(const T &s) {
-  if (s.sleepFunc)
+static auto prvPreset(const auto &x) -> Preset {
+  if (x.sleepFunc)
     return PRESET_SLEEP;
 
-  if (s.turbo1 || s.turbo2)
+  if (x.turbo1 || x.turbo2)
     return PRESET_TURBO;
 
-  if (s.eco)
+  if (x.eco)
     return PRESET_ECO;
 
-  if (s.eightHot)
+  if (x.eightHot)
     return PRESET_FROST_PROTECTION;
 
   return PRESET_NONE;
 }
 
-template<typename T> auto ControllableStatusOld::m_update(const T &s) {
-  m_power = s.power;
-  m_mode = s.mode;
-  m_hSwing = static_cast<bool>(s.leftRightFan);
-  m_vSwing = static_cast<bool>(s.updownFan);
-  m_targetTemp = prvTargetTemperature(s);
-  m_fanSpeed = s.fanSpeed;
-  m_humidity = s.humidity;
-  m_timers = s.timers;
-  m_preset = prvPreset(s);
+auto ControllableStatusOld::m_update(const auto &x) -> void {
+  m_power = x.power;
+  m_mode = x.mode;
+  m_hSwing = static_cast<bool>(x.leftRightFan);
+  m_vSwing = static_cast<bool>(x.updownFan);
+  m_targetTemp = prvTargetTemperature(x);
+  m_fanSpeed = x.fanSpeed;
+  m_humidity = x.humidity;
+  m_timers = x.timers;
+  m_preset = prvPreset(x);
 }
 
 auto ControllableStatusOld::getTargetTemp() const -> float { return m_targetTemp * 0.5F; }

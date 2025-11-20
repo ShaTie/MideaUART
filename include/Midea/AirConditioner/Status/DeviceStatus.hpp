@@ -137,8 +137,8 @@ class ControllableStatusOld {
   auto isTimeOff() const { return m_timers.isTimeOff(); }
 
  protected:
-  template<typename T> auto m_update(const T &x);
-  auto m_update(const MessageA1 &x) { m_humidity = x.humidity; }
+  auto m_update(const auto &x) -> void;
+  auto m_update(const MessageA1 &a1) -> void { m_humidity = a1.humidity; }
   /// Power status: `ON/OFF`.
   bool m_power : 1;
   /// Operation mode.
