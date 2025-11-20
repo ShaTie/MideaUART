@@ -4,7 +4,7 @@ namespace midea {
 namespace ac {
 
 // High byte base value
-static const auto HIGH_BASE(0x7F);
+static constexpr auto HIGH_BASE{0x7F};
 
 static auto prvGetTime(auto high, auto low) { return 15U * (high - HIGH_BASE) - low; }
 
