@@ -9,7 +9,7 @@ namespace ac {
 struct StatusA0 {
   /* Byte #0 */
 
-  uint8_t id;
+  uint8_t id;  // 0xA0
 
   /* Byte #1 */
 
@@ -139,7 +139,7 @@ struct StatusA0 {
 struct StatusA1 {
   /* Byte #0-12 */
 
-  uint8_t id;
+  uint8_t id;  // 0xA1
   uint8_t unused[12];
 
   /* Byte #13,14 */
@@ -167,7 +167,7 @@ struct StatusA1 {
 struct StatusC0 {
   // Byte #0
 
-  uint8_t id;
+  uint8_t id;  // 0xC0
 
   // Byte #1
 
@@ -343,7 +343,7 @@ struct StatusC0 {
 struct StatusC1 {
   /* Byte #0-15 */
 
-  uint8_t id;
+  uint8_t id;  // 0xC1
   uint8_t unused[15];
 
   /* Byte #16,17,18 */
