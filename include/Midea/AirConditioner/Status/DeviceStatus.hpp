@@ -56,7 +56,7 @@ class ControllableStatusOld {
    * @brief Get target temperature in °C.
    * @return Temperature value in °C.
    */
-  auto getTargetTemp() const -> float;
+  auto getTargetTemp() const { return m_targetTemp * 0.5F; }
 
   /**
    * @brief Get target temperature. Unit : 0.5°C.

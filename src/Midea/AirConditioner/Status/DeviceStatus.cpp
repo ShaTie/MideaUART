@@ -43,8 +43,6 @@ auto ControllableStatusOld::m_update(const auto &x) -> void {
   m_preset = prvPreset(x);
 }
 
-auto ControllableStatusOld::getTargetTemp() const -> float { return m_targetTemp * 0.5F; }
-
 auto ControllableStatusOld::getFanSpeedEnum() const -> FanSpeed {
   if (m_fanSpeed <= 50)
     return FAN_LOW;
