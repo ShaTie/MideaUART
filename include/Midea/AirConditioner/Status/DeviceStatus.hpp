@@ -247,6 +247,50 @@ class ReadableStatusOld {
  * to the control object instance.
  */
 struct ControllableStatusNew : public PropertiesConsumer {
+ public:
+  /**
+   * @brief Gets master values.
+   * @return Master values.
+   */
+  auto &getMasterValues() const { return mMasterValues; }
+
+  /**
+   * @brief Gets slave values.
+   * @return Slave values.
+   */
+  auto &getSlaveValues() const { return mSlaveValues; }
+
+  /**
+   * @brief Gets horizontal air direction.
+   * @return Horizontal air direction.
+   */
+  auto getHorizontalDirection() const { return prvGetDirectionEnum(hWindDirection); }
+
+  /**
+   * @brief Gets vertical air direction.
+   * @return Vertical air direction.
+   */
+  auto getVerticalDirection() const { return prvGetDirectionEnum(vWindDirection); }
+
+  /**
+   * @brief Gets breezeless mode.
+   * @return Breezeless mode.
+   */
+  auto getBreezelessMode() const { return breezelessMode; }
+
+  /**
+   * @brief Gets buzzer state.
+   * @return Buzzer state.
+   */
+  auto getBuzzer() const { return isBuzzerOn; }
+
+  /**
+   * @brief Gets self clean state.
+   * @return Self clean state.
+   */
+  auto getSelfClean() const { return isSelfCleanOn; }
+
+ private:
   /// Master Values.
   std::array<uint8_t, 4> mMasterValues{};
 
@@ -263,28 +307,31 @@ struct ControllableStatusNew : public PropertiesConsumer {
   BreezelessMode breezelessMode{};
 
   /// `BUZZER` state.
-  bool isBuzzerOn : 1;
+  bool isBuzzerOn : 1 {};
 
   /// `ACTIVE CLEAN` state.
-  bool isSelfCleanOn : 1;
+  bool isSelfCleanOn : 1 {};
 
   /// `SILKY COOL` status.
-  bool isSilkyCoolOn : 1;
+  bool isSilkyCoolOn : 1 {};
 
   /// `WIND ON ME` status. Only in `COOL` and `HEAT`. Turn ON all Swing.
-  bool isWindOnMeOn : 1;
+  bool isWindOnMeOn : 1 {};
 
   /// `WIND OFF ME` status. Only in `COOL` and `HEAT`. Turn OFF all Swing.
-  bool isWindOffMeOn : 1;
+  bool isWindOffMeOn : 1 {};
 
   /// `BREEZE AWAY` state.
-  bool isBreezeAwayOn : 1;
+  bool isBreezeAwayOn : 1 {};
 
   /// `ECO Intelligent EYE` state.
-  bool isSmartEyeOn : 1;
+  bool isSmartEyeOn : 1 {};
 
-  void m_onProperty(const Property &x) override;
-  static AirFlowDirection getDirectionEnum(unsigned x);
+  /// Overrided properties update method
+  auto m_onProperty(const Property &x) -> void override;
+
+  ///
+  static auto prvGetDirectionEnum(unsigned x) -> AirFlowDirection;
 };
 
 /**
@@ -293,9 +340,14 @@ struct ControllableStatusNew : public PropertiesConsumer {
 class ControllableStatus : public ControllableStatusOld, public ControllableStatusNew, public DeviceControlSettings {};
 
 /**
+ * @brief Aggregation of readable status types.
+ */
+class ReadableStatus : public ReadableStatusOld {};
+
+/**
  * @brief
  */
-class DeviceStatus : public ControllableStatus, public ReadableStatusOld, public DeviceCapabilities {
+class DeviceStatus : public ControllableStatus, public ReadableStatus, public DeviceCapabilities {
  protected:
   bool m_update(const MideaData &x);
 };

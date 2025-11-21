@@ -134,7 +134,7 @@ template<> inline auto ReadableStatusOld::m_update(const StatusC1 &x) {
   m_powerUsage = bcd2uint(x.bcdPower) * 0.1F;
 }
 
-auto ControllableStatusNew::getDirectionEnum(unsigned x) -> AirFlowDirection {
+auto ControllableStatusNew::prvGetDirectionEnum(unsigned x) -> AirFlowDirection {
   if (x >= 100)
     return AIR_DIRECTION_5;
 
