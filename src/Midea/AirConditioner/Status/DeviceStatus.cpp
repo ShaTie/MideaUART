@@ -135,19 +135,19 @@ template<> inline auto ReadableStatusOld::m_update(const StatusC1 &x) {
 }
 
 auto ControllableStatusNew::prvGetDirectionEnum(unsigned x) -> AirFlowDirection {
-  if (x >= 100)
+  if (x >= AIR_DIRECTION_5)
     return AIR_DIRECTION_5;
 
-  if (x >= 75)
+  if (x >= AIR_DIRECTION_4)
     return AIR_DIRECTION_4;
 
-  if (x >= 50)
+  if (x >= AIR_DIRECTION_3)
     return AIR_DIRECTION_3;
 
-  if (x >= 25)
+  if (x >= AIR_DIRECTION_2)
     return AIR_DIRECTION_2;
 
-  if (x >= 1)
+  if (x >= AIR_DIRECTION_1)
     return AIR_DIRECTION_1;
 
   return AIR_DIRECTION_UNKNOWN;
