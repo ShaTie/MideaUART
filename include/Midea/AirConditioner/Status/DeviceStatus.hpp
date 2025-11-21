@@ -161,6 +161,7 @@ class ControllableStatusOld {
   /// ON/OFF timers.
   DeviceTimers m_timers;
 
+ protected:
   /* update templated method used in `DeviceStatus` class */
   template<typename T> auto m_update(const T &x);
 };
