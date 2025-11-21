@@ -89,66 +89,48 @@ static auto prvInOutTemperature(int value, int decimal) -> float {
   return (value + decimal) * 0.1F;
 }
 
-inline auto ReadableStatusOld::m_update(const StatusA0 &a0) {
-  light = !a0.light;
+template<typename T> inline auto ReadableStatusOld::m_update(const T &x) {
+  // `StatusC0` only fields
+  if constexpr (std::is_same_v<T, StatusC0>) {
+    m_indoorTemp = prvInOutTemperature(x.inTemp, x.inTempDec);
+    m_outdoorTemp = prvInOutTemperature(x.outTemp, x.outTempDec);
+    errInfo = x.errInfo;
+    dusFull = x.dusFull;
 
-  // STORE UNKNOWN FLAGS
+    imodeResume = x.imodeResume;
+    timerMode = x.timerMode;
+    test2 = x.test2;
+    childSleepMode = x.childSleepMode;
+  }
 
-  cosySleep = a0.cosySleep;
-  save = a0.save;
-  lowFreqFan = a0.lowFreqFan;
-  feelOwn = a0.feelOwn;
-  naturalFan = a0.naturalFan;
-  dryClean = a0.dryClean;
-  cleanUp = a0.cleanUp;
-  exchangeAir = a0.exchangeAir;
-  nightLight = a0.nightLight;
-  catchCold = a0.catchCold;
-  peakElec = a0.peakElec;
-  setExpand = a0.setExpand;
-  doubleTemp = a0.doubleTemp;
+  light = !x.light;
+  cosySleep = x.cosySleep;
+  save = x.save;
+  lowFreqFan = x.lowFreqFan;
+  feelOwn = x.feelOwn;
+  naturalFan = x.naturalFan;
+  dryClean = x.dryClean;
+  cleanUp = x.cleanUp;
+  exchangeAir = x.exchangeAir;
+  nightLight = x.nightLight;
+  catchCold = x.catchCold;
+  peakElec = x.peakElec;
+  setExpand = x.setExpand;
+  doubleTemp = x.doubleTemp;
 }
 
-inline auto ReadableStatusOld::m_update(const StatusA1 &a1) {
-  m_indoorTemp = prvInOutTemperature(a1.inTemp, 0);
-  m_outdoorTemp = prvInOutTemperature(a1.outTemp, 0);
+template<> inline auto ReadableStatusOld::m_update(const StatusA1 &x) {
+  m_indoorTemp = prvInOutTemperature(x.inTemp, 0);
+  m_outdoorTemp = prvInOutTemperature(x.outTemp, 0);
 }
 
-inline auto ReadableStatusOld::m_update(const StatusC0 &c0) {
-  m_indoorTemp = prvInOutTemperature(c0.inTemp, c0.inTempDec);
-  m_outdoorTemp = prvInOutTemperature(c0.outTemp, c0.outTempDec);
-  errInfo = c0.errInfo;
-  dusFull = c0.dusFull;
-  light = !c0.light;
-
-  // STORE UNKNOWN FLAGS
-
-  imodeResume = c0.imodeResume;
-  timerMode = c0.timerMode;
-  test2 = c0.test2;
-  cosySleep = c0.cosySleep;
-  save = c0.save;
-  lowFreqFan = c0.lowFreqFan;
-  feelOwn = c0.feelOwn;
-  childSleepMode = c0.childSleepMode;
-  naturalFan = c0.naturalFan;
-  dryClean = c0.dryClean;
-  cleanUp = c0.cleanUp;
-  exchangeAir = c0.exchangeAir;
-  nightLight = c0.nightLight;
-  catchCold = c0.catchCold;
-  peakElec = c0.peakElec;
-  setExpand = c0.setExpand;
-  doubleTemp = c0.doubleTemp;
-}
-
-inline auto ReadableStatusOld::m_update(const StatusC1 &c1) {
+template<> inline auto ReadableStatusOld::m_update(const StatusC1 &x) {
   // Reads 6-digit BCD number (3 bytes) into an integer.
   auto bcd2uint([](auto bcd) {
     auto k([](auto x) { return x / 16 * 10 + x % 16; });
     return 1'00'00UL * k(bcd[0]) + 1'00UL * k(bcd[1]) + 1UL * k(bcd[2]);
   });
-  m_powerUsage = bcd2uint(c1.bcdPower) * 0.1F;
+  m_powerUsage = bcd2uint(x.bcdPower) * 0.1F;
 }
 
 auto ControllableStatusNew::getDirectionEnum(unsigned x) -> AirFlowDirection {

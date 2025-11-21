@@ -237,11 +237,8 @@ class ReadableStatusOld {
   bool doubleTemp : 1;
 
  protected:
-  /* inline update methods used in `DeviceStatus` class */
-  auto m_update(const StatusA0 &x);
-  auto m_update(const StatusA1 &x);
-  auto m_update(const StatusC0 &x);
-  auto m_update(const StatusC1 &x);
+  /* update templated method used in `DeviceStatus` class */
+  template<typename T> auto m_update(const T &x);
 };
 
 /**
