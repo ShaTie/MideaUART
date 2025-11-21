@@ -89,8 +89,9 @@ static auto prvInOutTemperature(int value, int decimal) -> float {
   return (value + decimal) * 0.1F;
 }
 
+// Templated update method from `StatusA0` and `StatusC0` messages data.
 template<typename T> inline auto ReadableStatusOld::m_update(const T &x) {
-  // `StatusC0` only fields
+  // Additional `StatusC0` data.
   if constexpr (std::is_same_v<T, StatusC0>) {
     m_indoorTemp = prvInOutTemperature(x.inTemp, x.inTempDec);
     m_outdoorTemp = prvInOutTemperature(x.outTemp, x.outTempDec);
