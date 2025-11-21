@@ -32,19 +32,20 @@ static auto prvPreset(const auto &x) -> Preset {
   return PRESET_NONE;
 }
 
-inline auto ControllableStatusOld::m_update(const auto &x) {
-  m_power = x.power;
-  m_mode = x.mode;
-  m_hSwing = static_cast<bool>(x.leftRightFan);
-  m_vSwing = static_cast<bool>(x.updownFan);
-  m_targetTemp = prvTargetTemperature(x);
-  m_fanSpeed = x.fanSpeed;
+template<typename T> auto ControllableStatusOld::m_update(const T &x) {
   m_humidity = x.humidity;
-  m_timers = x.timers;
-  m_preset = prvPreset(x);
-}
 
-inline auto ControllableStatusOld::m_update(const StatusA1 &a1) { m_humidity = a1.humidity; }
+  if constexpr (!std::is_same_v<T, StatusA1>) {
+    m_power = x.power;
+    m_mode = x.mode;
+    m_hSwing = static_cast<bool>(x.leftRightFan);
+    m_vSwing = static_cast<bool>(x.updownFan);
+    m_targetTemp = prvTargetTemperature(x);
+    m_fanSpeed = x.fanSpeed;
+    m_timers = x.timers;
+    m_preset = prvPreset(x);
+  }
+}
 
 auto ControllableStatusOld::getFanSpeedEnum() const -> FanSpeed {
   if (m_fanSpeed <= 50)
