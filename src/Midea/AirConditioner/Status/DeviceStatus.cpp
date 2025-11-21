@@ -9,14 +9,18 @@ namespace ac {
 
 /* ControllableStatusOld */
 
-static auto prvTargetTemperature(const StatusC0 &c0) -> uint8_t {
-  uint_fast8_t value(c0.newTemp ? (c0.newTemp + 12) : (c0.oldTemp + 16));
-  return value * 2 + c0.dotTemp;
+template<typename T> inline auto prvTargetTemperature(const T &x) -> uint8_t {
+  uint_fast8_t value(x.newTemp + 12);
+
+  if constexpr (std::is_same_v<T, StatusC0>) {
+    if (x.newTemp == 0)
+      value = x.oldTemp + 16;
+  }
+
+  return value * 2 + x.dotTemp;
 }
 
-static auto prvTargetTemperature(const StatusA0 &a0) -> uint8_t { return 24 + a0.newTemp * 2 + a0.dotTemp; }
-
-static auto prvPreset(const auto &x) -> Preset {
+template<typename T> inline auto prvPreset(const T &x) -> Preset {
   if (x.sleepFunc)
     return PRESET_SLEEP;
 
@@ -32,7 +36,7 @@ static auto prvPreset(const auto &x) -> Preset {
   return PRESET_NONE;
 }
 
-template<typename T> auto ControllableStatusOld::m_update(const T &x) {
+template<typename T> inline auto ControllableStatusOld::m_update(const T &x) {
   m_humidity = x.humidity;
 
   if constexpr (!std::is_same_v<T, StatusA1>) {
