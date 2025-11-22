@@ -43,8 +43,6 @@ template<OnlyA0C0 T> inline auto prvPreset(const T &x) -> Preset {
 }
 
 template<NativeStatusConcept T> inline auto ControllableStatusOld::m_update(const T &x) {
-  m_humidity = x.humidity;
-
   if constexpr (OnlyA0C0<T>) {
     m_power = x.power;
     m_mode = x.mode;
@@ -55,6 +53,7 @@ template<NativeStatusConcept T> inline auto ControllableStatusOld::m_update(cons
     m_timers = x.timers;
     m_preset = prvPreset(x);
   }
+  m_humidity = x.humidity;
 }
 
 auto ControllableStatusOld::getFanSpeedEnum() const -> FanSpeed {
