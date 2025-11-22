@@ -6,12 +6,18 @@
 namespace midea {
 namespace ac {
 
+template<typename T>
+concept OnlyC0 = std::is_same_v<StatusC0, T>;
+
+template<typename T>
+concept OnlyA0C0 = std::is_same_v<StatusA0, T> || OnlyC0<T>;
+
 /* ControllableStatusOld */
 
-template<typename T> inline auto prvTargetTemperature(const T &x) -> uint8_t {
+template<OnlyA0C0 T> inline auto prvTargetTemperature(const T &x) -> uint8_t {
   uint_fast8_t value(x.newTemp + 12);
 
-  if constexpr (std::is_same_v<T, StatusC0>) {
+  if constexpr (OnlyC0<T>) {
     if (x.newTemp == 0)
       value = x.oldTemp + 16;
   }
@@ -19,7 +25,7 @@ template<typename T> inline auto prvTargetTemperature(const T &x) -> uint8_t {
   return value * 2 + x.dotTemp;
 }
 
-template<typename T> inline auto prvPreset(const T &x) -> Preset {
+template<OnlyA0C0 T> inline auto prvPreset(const T &x) -> Preset {
   if (x.sleepFunc)
     return PRESET_SLEEP;
 
@@ -38,7 +44,7 @@ template<typename T> inline auto prvPreset(const T &x) -> Preset {
 template<NativeStatusConcept T> inline auto ControllableStatusOld::m_update(const T &x) {
   m_humidity = x.humidity;
 
-  if constexpr (!std::is_same_v<T, StatusA1>) {
+  if constexpr (OnlyA0C0<T>) {
     m_power = x.power;
     m_mode = x.mode;
     m_hSwing = static_cast<bool>(x.leftRightFan);
@@ -94,8 +100,7 @@ static auto prvInOutTemperature(int value, int decimal) -> float {
 
 // Templated update method from `StatusA0` and `StatusC0` messages data.
 template<NativeStatusConcept T> inline auto ReadableStatusOld::m_update(const T &x) {
-  // Additional `StatusC0` data.
-  if constexpr (std::is_same_v<T, StatusC0>) {
+  if constexpr (OnlyC0<T>) {
     m_indoorTemp = prvInOutTemperature(x.inTemp, x.inTempDec);
     m_outdoorTemp = prvInOutTemperature(x.outTemp, x.outTempDec);
     errInfo = x.errInfo;
