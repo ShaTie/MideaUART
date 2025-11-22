@@ -1,6 +1,6 @@
 #pragma once
 
-#include <type_traits>
+#include <concepts>
 
 #include "Midea/AirConditioner/Status/Types.hpp"
 #include "Midea/AirConditioner/Status/DeviceTimers.hpp"
@@ -13,7 +13,7 @@ struct StatusBase {
 };
 
 template<typename T>
-concept NativeStatusConcept = std::is_base_of_v<StatusBase, T>;
+concept NativeStatusConcept = std::derived_from<T, StatusBase>;
 
 struct StatusA0 : public StatusBase {
   /* Byte #1 */

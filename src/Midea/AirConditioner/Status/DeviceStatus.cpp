@@ -1,5 +1,5 @@
+#include <concepts>
 #include <limits>
-#include <type_traits>
 
 #include "Midea/AirConditioner/Status/DeviceStatus.hpp"
 #include "Midea/Message/PropertiesConsumer.hpp"
@@ -8,10 +8,10 @@ namespace midea {
 namespace ac {
 
 template<typename T>
-concept OnlyC0 = std::is_same_v<StatusC0, T>;
+concept OnlyC0 = std::same_as<StatusC0, T>;
 
 template<typename T>
-concept OnlyA0C0 = std::is_same_v<StatusA0, T> || OnlyC0<T>;
+concept OnlyA0C0 = std::same_as<StatusA0, T> || OnlyC0<T>;
 
 /* ControllableStatusOld */
 
