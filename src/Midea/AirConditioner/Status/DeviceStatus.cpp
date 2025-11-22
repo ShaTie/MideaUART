@@ -8,10 +8,10 @@ namespace midea {
 namespace ac {
 
 template<typename T>
-concept OnlyC0 = std::same_as<StatusC0, T>;
+concept OnlyC0 = std::same_as<T, StatusC0>;
 
 template<typename T>
-concept OnlyA0C0 = std::same_as<StatusA0, T> || OnlyC0<T>;
+concept OnlyA0C0 = std::same_as<T, StatusA0> || OnlyC0<T>;
 
 /* ControllableStatusOld */
 
