@@ -1,4 +1,5 @@
 #include <limits>
+#include <type_traits>
 
 #include "Midea/AirConditioner/Status/DeviceStatus.hpp"
 #include "Midea/Message/PropertiesConsumer.hpp"
@@ -98,7 +99,7 @@ static auto prvInOutTemperature(int value, int decimal) -> float {
   return (value + decimal) * 0.1F;
 }
 
-// Templated update method from `StatusA0` and `StatusC0` messages data.
+// Templated update method from `A0` and `C0` messages data.
 template<NativeStatusConcept T> inline auto ReadableStatusOld::m_update(const T &x) {
   if constexpr (OnlyC0<T>) {
     m_indoorTemp = prvInOutTemperature(x.inTemp, x.inTempDec);
@@ -128,11 +129,13 @@ template<NativeStatusConcept T> inline auto ReadableStatusOld::m_update(const T 
   doubleTemp = x.doubleTemp;
 }
 
+// Specialized update method from `A1` message data.
 template<> inline auto ReadableStatusOld::m_update(const StatusA1 &x) {
   m_indoorTemp = prvInOutTemperature(x.inTemp, 0);
   m_outdoorTemp = prvInOutTemperature(x.outTemp, 0);
 }
 
+// Specialized update method from `C1` message data.
 template<> inline auto ReadableStatusOld::m_update(const StatusC1 &x) {
   // Reads 6-digit BCD number (3 bytes) into an integer.
   auto bcd2uint([](auto bcd) {
