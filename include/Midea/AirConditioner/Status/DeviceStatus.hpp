@@ -4,15 +4,10 @@
 
 #include "Midea/AirConditioner/DeviceCapabilities.hpp"
 #include "Midea/AirConditioner/DeviceData.hpp"
-#include "Midea/AirConditioner/Status/DeviceTimers.hpp"
+#include "Midea/AirConditioner/Status/DeviceStatusNative.hpp"
 
 namespace midea {
 namespace ac {
-
-class StatusA0;
-class StatusA1;
-class StatusC0;
-class StatusC1;
 
 /**
  * @brief Device control settings. Stored in the device instance, copied to the control object instance to allow for
@@ -163,7 +158,7 @@ class ControllableStatusOld {
 
  protected:
   /* update templated method used in `DeviceStatus` class */
-  template<typename T> auto m_update(const T &x);
+  template<NativeStatusConcept T> auto m_update(const T &x);
 };
 
 /**
@@ -239,7 +234,7 @@ class ReadableStatusOld {
 
  protected:
   /* update templated method used in `DeviceStatus` class */
-  template<typename T> auto m_update(const T &x);
+  template<NativeStatusConcept T> auto m_update(const T &x);
 };
 
 /**

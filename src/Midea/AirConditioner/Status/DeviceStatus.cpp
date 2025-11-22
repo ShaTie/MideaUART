@@ -1,7 +1,6 @@
 #include <limits>
 
 #include "Midea/AirConditioner/Status/DeviceStatus.hpp"
-#include "Midea/AirConditioner/Status/DeviceStatusNative.hpp"
 #include "Midea/Message/PropertiesConsumer.hpp"
 
 namespace midea {
@@ -36,7 +35,7 @@ template<typename T> inline auto prvPreset(const T &x) -> Preset {
   return PRESET_NONE;
 }
 
-template<typename T> inline auto ControllableStatusOld::m_update(const T &x) {
+template<NativeStatusConcept T> inline auto ControllableStatusOld::m_update(const T &x) {
   m_humidity = x.humidity;
 
   if constexpr (!std::is_same_v<T, StatusA1>) {
@@ -94,7 +93,7 @@ static auto prvInOutTemperature(int value, int decimal) -> float {
 }
 
 // Templated update method from `StatusA0` and `StatusC0` messages data.
-template<typename T> inline auto ReadableStatusOld::m_update(const T &x) {
+template<NativeStatusConcept T> inline auto ReadableStatusOld::m_update(const T &x) {
   // Additional `StatusC0` data.
   if constexpr (std::is_same_v<T, StatusC0>) {
     m_indoorTemp = prvInOutTemperature(x.inTemp, x.inTempDec);

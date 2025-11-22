@@ -1,16 +1,21 @@
 #pragma once
 
+#include <type_traits>
+
 #include "Midea/AirConditioner/Status/Types.hpp"
 #include "Midea/AirConditioner/Status/DeviceTimers.hpp"
 
 namespace midea {
 namespace ac {
 
-struct StatusA0 {
-  /* Byte #0 */
+struct StatusBase {
+  uint8_t id;
+};
 
-  uint8_t id;  // 0xA0
+template<typename T>
+concept NativeStatusConcept = std::is_base_of_v<StatusBase, T>;
 
+struct StatusA0 : public StatusBase {
   /* Byte #1 */
 
   /// Power status flag: `ON/OFF`.
@@ -136,10 +141,9 @@ struct StatusA0 {
   uint8_t : 4;
 };
 
-struct StatusA1 {
-  /* Byte #0-12 */
+struct StatusA1 : public StatusBase {
+  /* Byte #1-12 */
 
-  uint8_t id;  // 0xA1
   uint8_t unused[12];
 
   /* Byte #13,14 */
@@ -164,11 +168,7 @@ struct StatusA1 {
 /**
  * @brief Device state `0xC0` message body. Size: 22 bytes.
  */
-struct StatusC0 {
-  // Byte #0
-
-  uint8_t id;  // 0xC0
-
+struct StatusC0 : public StatusBase {
   // Byte #1
 
   /// Power status flag: `ON/OFF`.
@@ -340,14 +340,10 @@ struct StatusC0 {
   uint8_t : 4;
 };
 
-struct StatusC1 {
-  /* Byte #0-15 */
-
-  uint8_t id;  // 0xC1
+struct StatusC1 : public StatusBase {
+  /* Byte #1-15 */
   uint8_t unused[15];
-
   /* Byte #16,17,18 */
-
   uint8_t bcdPower[3];
 };
 
