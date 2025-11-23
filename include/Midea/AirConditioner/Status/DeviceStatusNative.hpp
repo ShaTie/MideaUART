@@ -13,9 +13,9 @@ struct StatusBase {
 };
 
 template<typename T>
-concept NativeStatusConcept = std::derived_from<T, StatusBase>;
+concept AnyStatus = std::derived_from<T, StatusBase>;
 
-struct StatusA0 : public StatusBase {
+struct StatusA0 : StatusBase {
   /* Byte #1 */
 
   /// Power status flag: `ON/OFF`.
@@ -141,7 +141,7 @@ struct StatusA0 : public StatusBase {
   uint8_t : 4;
 };
 
-struct StatusA1 : public StatusBase {
+struct StatusA1 : StatusBase {
   /* Byte #1-12 */
 
   uint8_t unused[12];
@@ -168,7 +168,7 @@ struct StatusA1 : public StatusBase {
 /**
  * @brief Device state `0xC0` message body. Size: 22 bytes.
  */
-struct StatusC0 : public StatusBase {
+struct StatusC0 : StatusBase {
   // Byte #1
 
   /// Power status flag: `ON/OFF`.
@@ -340,7 +340,7 @@ struct StatusC0 : public StatusBase {
   uint8_t : 4;
 };
 
-struct StatusC1 : public StatusBase {
+struct StatusC1 : StatusBase {
   /* Byte #1-15 */
   uint8_t unused[15];
   /* Byte #16,17,18 */

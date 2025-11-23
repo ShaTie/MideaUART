@@ -42,7 +42,7 @@ template<OnlyA0C0 T> inline auto prvPreset(const T &x) -> Preset {
   return PRESET_NONE;
 }
 
-template<NativeStatusConcept T> inline auto ControllableStatusOld::m_update(const T &x) {
+template<AnyStatus T> inline auto ControllableStatusOld::m_update(const T &x) {
   if constexpr (OnlyA0C0<T>) {
     m_power = x.power;
     m_mode = x.mode;
@@ -99,7 +99,7 @@ static auto prvInOutTemperature(int value, int decimal) -> float {
 }
 
 // Templated update method from `A0` and `C0` messages data.
-template<NativeStatusConcept T> inline auto ReadableStatusOld::m_update(const T &x) {
+template<AnyStatus T> inline auto ReadableStatusOld::m_update(const T &x) {
   if constexpr (OnlyC0<T>) {
     m_indoorTemp = prvInOutTemperature(x.inTemp, x.inTempDec);
     m_outdoorTemp = prvInOutTemperature(x.outTemp, x.outTempDec);

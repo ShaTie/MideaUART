@@ -158,7 +158,7 @@ class ControllableStatusOld {
 
  protected:
   /* update templated method used in `DeviceStatus` class */
-  template<NativeStatusConcept T> auto m_update(const T &x);
+  template<AnyStatus T> auto m_update(const T &x);
 };
 
 /**
@@ -234,7 +234,7 @@ class ReadableStatusOld {
 
  protected:
   /* update templated method used in `DeviceStatus` class */
-  template<NativeStatusConcept T> auto m_update(const T &x);
+  template<AnyStatus T> auto m_update(const T &x);
 };
 
 /**
