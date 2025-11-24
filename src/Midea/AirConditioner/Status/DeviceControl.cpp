@@ -30,7 +30,7 @@ auto DeviceControl::setTargetTempInt(uint8_t value) -> void {
   m_oldChanged = true;
 }
 
-auto DeviceControl::setFanSpeed(uint_fast8_t value) -> void {
+auto DeviceControl::setFanSpeed(uint8_t value) -> void {
   if (value == m_fanSpeed)
     return;
 

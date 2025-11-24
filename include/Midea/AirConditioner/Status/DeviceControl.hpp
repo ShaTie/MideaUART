@@ -49,7 +49,7 @@ class DeviceControl : public ControllableStatus {
    * @brief Set fan speed in percents if supported, otherwise use `FanSpeed` enum.
    * @param x Fan speed in percents or `FanSpeed` enum value.
    */
-  auto setFanSpeed(uint_fast8_t x) -> void;
+  auto setFanSpeed(uint8_t x) -> void;
 
   /**
    * @brief Set preset.
