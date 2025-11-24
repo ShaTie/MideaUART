@@ -175,10 +175,10 @@ auto DeviceCapabilities::hasFanSpeed(uint_fast8_t x) const -> bool {
   }
 }
 
-auto DeviceCapabilities::m_temp(const uint8_t *x) -> void {
-  m_tempCool = {x[0], x[1]};
-  m_tempAuto = {x[2], x[3]};
-  m_tempHeat = {x[4], x[5]};
+inline auto DeviceCapabilities::m_temp(const uint8_t *x) -> void {
+  m_tempCool = TempRange(x[0], x[1]);
+  m_tempAuto = TempRange(x[2], x[3]);
+  m_tempHeat = TempRange(x[4], x[5]);
   m_hasTempDot = bool(x[6]);
 }
 
