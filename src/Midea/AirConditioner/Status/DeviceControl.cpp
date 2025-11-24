@@ -42,6 +42,11 @@ auto DeviceControl::setFanSpeed(uint8_t value) -> void {
   m_oldChanged = true;
 }
 
+inline auto DeviceControl::m_tempConstraints() -> void {
+  auto &range(m_parent.tempRange(m_mode));
+  m_targetTemp = std::clamp(m_targetTemp, range.min, range.max);
+}
+
 inline auto DeviceControl::m_fanConstraints() -> void {
   switch (m_mode) {
     case MODE_AUTO:
@@ -53,12 +58,12 @@ inline auto DeviceControl::m_fanConstraints() -> void {
   }
 }
 
-auto DeviceControl::setStatusQuery() const -> DeviceData {
+auto DeviceControl::setStatusQuery() -> DeviceData {
+  m_fanConstraints();
+  m_tempConstraints();
   // `old_temp` (4-bits) supports range from 17°C (1) to 30°C (14).
-  // If the value is outside this range, `old_temp` is equal to the minimum limit of 17°C (1).
   // `new_temp` (5-bits) supports more wide range from 13°C (1) to 42°C (30).
-  auto &range(m_parent.tempRange(m_mode));
-  const uint_fast8_t temp(std::clamp(m_targetTemp, range.min, range.max)), dot_temp(temp % 2);
+  const uint_fast8_t temp(m_targetTemp), dot_temp(temp % 2);
   const uint_fast8_t new_temp(temp / 2 - 12), old_temp(std::clamp<uint_fast8_t>(temp / 2, 17, 30) - 16);
 
   // Set PTC Assist flag if in HEAT mode and electric heater is supported.

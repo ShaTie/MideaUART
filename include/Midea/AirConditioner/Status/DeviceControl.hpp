@@ -68,7 +68,7 @@ class DeviceControl : public ControllableStatus {
    */
   auto clearFilterMaintenance() { m_cleanFanTime = m_parent.airFilterReminder(); }
 
-  auto setStatusQuery() const -> DeviceData;
+  auto setStatusQuery() -> DeviceData;
 
   /**
    * @brief Sets the remaining time of the on timer. Unit : minutes.
@@ -83,6 +83,8 @@ class DeviceControl : public ControllableStatus {
   auto setTimeOff(unsigned minutes) { m_timers.setTimeOff(m_power ? minutes : 0); }
 
  private:
+  /// Target temperature correction.
+  auto m_tempConstraints() -> void;
   /// Fan speed correction.
   auto m_fanConstraints() -> void;
   /// Device status.
