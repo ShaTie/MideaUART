@@ -6,6 +6,8 @@
 namespace midea {
 namespace ac {
 
+DeviceControl::DeviceControl(const DeviceStatus &x) : ControllableStatus(x), m_parent(x) {}
+
 auto DeviceControl::setMode(OperationMode mode) -> void {
   // ignore if already powered on and mode not changes
   if (m_power && mode == m_mode)

@@ -7,7 +7,7 @@ namespace ac {
 
 class DeviceControl : public ControllableStatus {
  public:
-  DeviceControl(const DeviceStatus &x) : ControllableStatus(x), m_parent(x) {}
+  DeviceControl(const DeviceStatus &x);
 
   /**
    * @brief Set target temperature in °C.
