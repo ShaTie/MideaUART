@@ -59,7 +59,7 @@ auto DeviceControl::setStatusQuery() const -> DeviceData {
   // `new_temp` (5-bits) supports more wide range from 13°C (1) to 42°C (30).
   auto &range(m_parent.tempRange(m_mode));
   const uint_fast8_t temp(std::clamp(m_targetTemp, range.min, range.max)), dot_temp(temp % 2);
-  const uint_fast8_t new_temp(temp / 2 - 12), old_temp(std::clamp(temp / 2, 17U, 30U) - 16);
+  const uint_fast8_t new_temp(temp / 2 - 12), old_temp(std::clamp<uint_fast8_t>(temp / 2, 17, 30) - 16);
 
   // Set PTC Assist flag if in HEAT mode and electric heater is supported.
   bool ptc_assis(m_mode == MODE_HEAT && m_parent.hasElectricHeater());
