@@ -13,13 +13,13 @@ class DeviceControl : public ControllableStatus {
    * @brief Set target temperature in °C.
    * @param x Temperature value in °C.
    */
-  auto setTargetTemp(float x) -> bool;
+  auto setTargetTemp(float x) -> void;
 
   /**
    * @brief Set target temperature. Unit : 0.5°C.
    * @param x Temperature value. Unit : 0.5°C.
    */
-  auto setTargetTempInt(uint8_t x) -> bool;
+  auto setTargetTempInt(uint8_t x) -> void;
 
   /**
    * @brief Set power status. Automatically turns on mode change.
@@ -31,7 +31,7 @@ class DeviceControl : public ControllableStatus {
    * @brief Set operation mode.
    * @param value Operation mode.
    */
-  auto setMode(OperationMode value) -> bool;
+  auto setMode(OperationMode value) -> void;
 
   /**
    * @brief Set vertical swing state.
@@ -49,7 +49,7 @@ class DeviceControl : public ControllableStatus {
    * @brief Set fan speed in percents if supported, otherwise use `FanSpeed` enum.
    * @param x Fan speed in percents or `FanSpeed` enum value.
    */
-  auto setFanSpeed(uint_fast8_t x) -> bool;
+  auto setFanSpeed(uint_fast8_t x) -> void;
 
   /**
    * @brief Set preset.
@@ -84,9 +84,7 @@ class DeviceControl : public ControllableStatus {
 
  private:
   /// Fan speed correction.
-  bool m_fanConstraints();
-  /// Target temp correction.
-  bool m_tempConstraints();
+  auto m_fanConstraints() -> void;
   /// Device status.
   const DeviceStatus &m_parent;
   /// `Reset Air Filter Maintenance Timer` flag.

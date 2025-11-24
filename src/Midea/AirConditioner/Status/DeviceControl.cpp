@@ -4,70 +4,49 @@
 namespace midea {
 namespace ac {
 
-auto DeviceControl::setMode(OperationMode value) -> bool {
-  if (m_power && value == m_mode)
-    return false;
+auto DeviceControl::setMode(OperationMode mode) -> void {
+  // ignore if already powered on and mode not changes
+  if (m_power && mode == m_mode)
+    return;
 
-  if (!m_parent.hasMode(value))
-    return false;
+  if (!m_parent.hasMode(mode))
+    return;
 
-  m_power = true;
-  m_mode = value;
+  m_mode = mode;
   m_preset = PRESET_NONE;
+  m_power = true;
   m_oldChanged = true;
-
-  return true;
 }
 
-auto DeviceControl::setTargetTemp(float x) -> bool { return setTargetTempInt(x * 2 + 0.5F); }
+auto DeviceControl::setTargetTemp(float x) -> void { setTargetTempInt(x * 2 + 0.5F); }
 
-auto DeviceControl::setTargetTempInt(uint8_t value) -> bool {
+auto DeviceControl::setTargetTempInt(uint8_t value) -> void {
   if (value == m_targetTemp)
-    return false;
+    return;
 
   m_targetTemp = value;
   m_oldChanged = true;
-
-  return true;
 }
 
-auto DeviceControl::setFanSpeed(uint_fast8_t value) -> bool {
+auto DeviceControl::setFanSpeed(uint_fast8_t value) -> void {
   if (value == m_fanSpeed)
-    return false;
+    return;
 
   if (!m_parent.hasFanSpeed(value))
-    return false;
+    return;
 
   m_fanSpeed = value;
   m_preset = PRESET_NONE;
   m_oldChanged = true;
-
-  return true;
 }
 
-auto DeviceControl::m_tempConstraints() -> bool {
-  auto &range(m_parent.tempRange(m_mode));
-
-  if (m_targetTemp < range.min)
-    m_targetTemp = range.min;
-
-  else if (m_targetTemp > range.max)
-    m_targetTemp = range.max;
-
-  else
-    return false;
-
-  return true;
-}
-
-auto DeviceControl::m_fanConstraints() -> bool {
+inline auto DeviceControl::m_fanConstraints() -> void {
   switch (m_mode) {
     case MODE_AUTO:
     case MODE_DRY:
     case MODE_DRY_CUSTOM:
-      return setFanSpeed(FAN_AUTO);
+      setFanSpeed(FAN_AUTO);
     default:
-      return false;
   }
 }
 
@@ -75,11 +54,9 @@ auto DeviceControl::setStatusQuery() const -> DeviceData {
   // `old_temp` (4-bits) supports range from 17°C (1) to 30°C (14).
   // If the value is outside this range, `old_temp` is equal to the minimum limit of 17°C (1).
   // `new_temp` (5-bits) supports more wide range from 13°C (1) to 42°C (30).
-  bool dot_temp(m_targetTemp % 2);
-  uint_fast8_t new_temp(m_targetTemp / 2 - 12), old_temp(new_temp - 5);
-
-  if (old_temp > 13)
-    old_temp = 0;
+  auto &range(m_parent.tempRange(m_mode));
+  const uint_fast8_t temp(std::clamp(m_targetTemp, range.min, range.max)), dot_temp(temp % 2);
+  const uint_fast8_t new_temp(temp / 2 - 12), old_temp(std::clamp(temp / 2, 17U, 30U) - 16);
 
   // Set PTC Assist flag if in HEAT mode and electric heater is supported.
   bool ptc_assis(m_mode == MODE_HEAT && m_parent.hasElectricHeater());
@@ -94,7 +71,7 @@ auto DeviceControl::setStatusQuery() const -> DeviceData {
   data[1] = shl(m_feedback, 6) + shl(s.test2, 5) + shl(s.timerMode, 4) + shl(s.childSleepMode, 3) +
             shl(s.imodeResume, 2) + shl(true, 1) + shl(m_power, 0);
 
-  data[2] = shl(m_mode, 5) + shl(dot_temp, 4) + shl(old_temp + 1, 0);
+  data[2] = shl(m_mode, 5) + shl(dot_temp, 4) + shl(old_temp, 0);
   data[3] = shl(m_fanSpeed, 0);
 
   data.ref<DeviceTimers>(4) = m_timers;
