@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "Midea/AirConditioner/Status/DeviceControl.hpp"
 #include "Dongle/Message/Message.hpp"
 
@@ -47,6 +49,7 @@ inline auto DeviceControl::m_fanConstraints() -> void {
     case MODE_DRY_CUSTOM:
       setFanSpeed(FAN_AUTO);
     default:
+      break;
   }
 }
 
