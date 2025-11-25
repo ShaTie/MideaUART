@@ -205,7 +205,7 @@ class DeviceCapabilities : public MideaCapabilities {
    * @brief Checks if the LED display has an extra decimal place `.5`.
    * @return `true` if the LED display has an extra decimal place `.5`.
    */
-  auto hasDotFive() const -> bool { return m_hasTempDot; }
+  auto hasDotFive() const -> bool { return m_isHavePoint; }
 
   /**
    * @brief Checks if the LED display has an extra decimal place `.5`.
@@ -244,56 +244,56 @@ class DeviceCapabilities : public MideaCapabilities {
   /// Supported temperature range in `HEAT` mode.
   TempRange m_tempHeat{};
 
-  uint8_t m_hasMode : 4 {};
-  uint8_t m_hasDrySmart : 2 {};
-  uint8_t m_hasSwing : 2 {};
+  uint8_t m_hasMode : 4 {0b1111};
+  uint8_t m_hasDrySmart : 2 {0b00};
+  uint8_t m_hasSwing : 2 {0b01};
 
-  uint8_t m_hasEco : 2 {};
-  uint8_t m_hasTurbo : 2 {};
-  uint8_t m_hasPower : 2 {};
-  uint8_t m_hasFilter : 2 {};
+  uint8_t m_hasEco : 2 {0b00};
+  uint8_t m_hasTurbo : 2 {0b01};
+  uint8_t m_hasPower : 2 {0b00};
+  uint8_t m_hasFilter : 2 {0b00};
 
-  uint8_t m_hasFan : 5 {};
+  uint8_t m_hasFan : 5 {0b01111};
 
   /// LED screen has decimal point.
-  bool m_hasTempDot : 1 {};
+  bool m_isHavePoint : 1 {false};
   /// `FAHRENHEITS` display units supported.
-  bool m_unitChangeable : 1 {};
+  bool m_unitChangeable : 1 {true};
   /// LED Light. Values: 0 (Off), 7 (On).
-  bool m_hasLight : 1 {};
+  bool m_hasLight : 1 {false};
   /// `FROST PROTECTION` preset supported.
-  bool m_eightHot : 1 {};
+  bool m_eightHot : 1 {false};
   /// `ELECTRIC AUXILIARY HEATER` supported.
-  bool m_dianfure : 1 {};
+  bool m_dianfure : 1 {false};
 
   /* 0xB0/0xB1 capabilities */
 
   /// `ACTIVE CLEAN` preset supported.
-  bool m_hasSelfClean : 1 {};
+  bool m_hasSelfClean : 1 {false};
   /// `SILKY COOL` preset supported.
-  bool m_hasNoWindFeel : 1 {};
+  bool m_hasNoWindFeel : 1 {false};
   /// `BREEZE AWAY` preset supported. Not supported in `AUTO` and `HEAT` modes.
-  bool m_hasOneKeyNoWindOnMe : 1 {};
+  bool m_hasOneKeyNoWindOnMe : 1 {false};
   /// `BREEZELESS` preset supported.
-  bool m_hasBreeze : 1 {};
+  bool m_hasBreeze : 1 {false};
   /// `SOUND` supported.
-  bool m_hasBuzzer : 1 {};
+  bool m_hasBuzzer : 1 {false};
   /// `ECO INTELLIGENT EYE` preset supported.
-  bool m_hasSmartEye : 1 {};
+  bool m_hasSmartEye : 1 {false};
   /// `INDOOR HUMIDITY` report supported.
-  bool m_hasIndoorHumidity : 1 {};
+  bool m_hasIndoorHumidity : 1 {true};
   /// `VERTICAL AIR FLOW DIRECTION` supported.
-  bool m_hasVerticalWind : 1 {};
+  bool m_hasVerticalWind : 1 {false};
   /// `HORIZONTAL AIR FLOW DIRECTION` supported.
-  bool m_hasHorizontalWind : 1 {};
+  bool m_hasHorizontalWind : 1 {false};
   /// Is multi-split system.
-  bool m_isTwins : 1 {};
+  bool m_isTwins : 1 {false};
   /// Cassette four direction type.
-  bool m_isFourDirection : 1 {};
+  bool m_isFourDirection : 1 {false};
   /// `WIND ON ME` preset supported.
-  bool m_hasBlowingPeople : 1 {};
+  bool m_hasBlowingPeople : 1 {false};
   /// `WIND OFF ME` preset supported.
-  bool m_hasAvoidPeople : 1 {};
+  bool m_hasAvoidPeople : 1 {false};
 };
 
 }  // namespace ac

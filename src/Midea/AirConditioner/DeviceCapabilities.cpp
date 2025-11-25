@@ -179,7 +179,7 @@ inline auto DeviceCapabilities::m_temp(const uint8_t *x) -> void {
   m_tempCool = TempRange(x[0], x[1]);
   m_tempAuto = TempRange(x[2], x[3]);
   m_tempHeat = TempRange(x[4], x[5]);
-  m_hasTempDot = bool(x[6]);
+  m_isHavePoint = bool(x[6]);
 }
 
 auto DeviceCapabilities::m_onProperty(const Property &x) -> void {
@@ -317,7 +317,7 @@ auto DeviceCapabilities::dump() const -> void {
   LOG_CAPABILITY("      - MEDIUM", hasFanMedium());
   LOG_CAPABILITY("      - HIGH", hasFanHigh());
   LOG_CAPABILITY("  [x] Indoor Humidity", m_hasIndoorHumidity);  // Indoor humidity in B1 response
-  LOG_CAPABILITY("  [x] Decimal Point", m_hasTempDot);
+  LOG_CAPABILITY("  [x] Decimal Point", m_isHavePoint);
   LOG_CAPABILITY("  [x] Fahrenheits", m_unitChangeable);
   LOG_CAPABILITY("  [x] Breezeless", m_hasBreeze);  // Only in `COOL` mode. Valid values are: 1, 2, 3, 4.
   LOG_CAPABILITY("  [x] Vertical Direction", m_hasVerticalWind);
