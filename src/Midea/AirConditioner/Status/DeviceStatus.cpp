@@ -1,5 +1,7 @@
+#include <algorithm>
 #include <concepts>
 #include <limits>
+#include <cstring>
 
 #include "Midea/AirConditioner/Status/DeviceStatus.hpp"
 #include "Midea/Message/PropertiesConsumer.hpp"
@@ -167,13 +169,6 @@ auto ControllableStatusNew::prvGetDirectionEnum(unsigned x) -> AirFlowDirection 
 
 auto DeviceStatus::m_update(const MideaData &x) -> bool {
   switch (x.typeID()) {
-    case 0xC0: {
-      auto &s(x.ref<StatusC0>());
-      ControllableStatusOld::m_update(s);
-      ReadableStatusOld::m_update(s);
-      return true;
-    }
-
     case 0xA0: {
       auto &s(x.ref<StatusA0>());
       ControllableStatusOld::m_update(s);
@@ -183,6 +178,18 @@ auto DeviceStatus::m_update(const MideaData &x) -> bool {
 
     case 0xA1: {
       auto &s(x.ref<StatusA1>());
+      ControllableStatusOld::m_update(s);
+      ReadableStatusOld::m_update(s);
+      return true;
+    }
+
+    case 0xB0:
+    case 0xB1:
+      ControllableStatusNew::m_update(x);
+      return true;
+
+    case 0xC0: {
+      auto &s(x.ref<StatusC0>());
       ControllableStatusOld::m_update(s);
       ReadableStatusOld::m_update(s);
       return true;
@@ -200,7 +207,11 @@ auto DeviceStatus::m_update(const MideaData &x) -> bool {
 }
 
 auto ac::ControllableStatusNew::m_onProperty(const Property &x) -> void {
+  if (x.result())
+    return;
+
   unsigned b0(*x.data());
+
   switch (x.uuid()) {
     case UUID_VWIND:
       vWindDirection = b0;
@@ -208,11 +219,23 @@ auto ac::ControllableStatusNew::m_onProperty(const Property &x) -> void {
     case UUID_HWIND:
       hWindDirection = b0;
       break;
+    case UUID_SILKY_COOL:
+      isSilkyCoolOn = bool(b0);
+      break;
+    case UUID_BREEZE_AWAY:
+      isBreezeAwayOn = bool(b0 == 2);
+      break;
     case UUID_BREEZELESS:
       breezelessMode = BreezelessMode(b0);
       break;
     case UUID_BUZZER:
       isBuzzerOn = !!b0;
+      break;
+    case 0x230:
+      std::memcpy(mMasterValues.data(), x.data(), mMasterValues.size());
+      break;
+    case 0x231:
+      std::memcpy(mSlaveValues.data(), x.data(), mSlaveValues.size());
       break;
   }
 }

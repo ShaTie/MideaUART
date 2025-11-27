@@ -49,15 +49,14 @@ class Property {
  * @brief Properties consumer base class.
  */
 class PropertiesConsumer {
- public:
+ protected:
   /**
    * @brief Reads properties from 0xBx message data.
    * @param s Reference to `MideaData` instance.
    * @return If zero - no more data is required. Else `ID` of next message.
    */
-  unsigned update(const MideaData &s);
+  unsigned m_update(const MideaData &s);
 
- protected:
   /**
    * @brief Pure virtual method called on every property while update.
    * @param x Property instance.

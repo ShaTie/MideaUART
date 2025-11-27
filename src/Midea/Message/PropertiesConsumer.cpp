@@ -16,7 +16,7 @@ class PropertiesReader : public Property {
   }
 };
 
-unsigned PropertiesConsumer::update(const MideaData &x) {
+unsigned PropertiesConsumer::m_update(const MideaData &x) {
   PropertiesReader reader(x);
 
   for (; reader.valid(); reader.advance())
