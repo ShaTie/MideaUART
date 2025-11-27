@@ -188,6 +188,9 @@ auto DeviceStatus::m_update(const MideaData &x) -> bool {
       ControllableStatusNew::m_update(x);
       return true;
 
+    case 0xB5:
+      return DeviceCapabilities::m_update(x);
+
     case 0xC0: {
       auto &s(x.ref<StatusC0>());
       ControllableStatusOld::m_update(s);
