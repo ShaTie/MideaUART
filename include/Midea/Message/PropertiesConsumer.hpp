@@ -10,39 +10,33 @@ class Property {
    * @brief Property UUID.
    * @return UUID.
    */
-  PropertyUUID uuid() const { return m_header[1] * 256 + m_header[0]; }
+  auto uuid() const { return PropertyUUID(256 * m_header[1] + m_header[0]); }
 
   /**
    * @brief Returns data pointer.
    * @return Pointer to data.
    */
-  const uint8_t *data() const { return m_data; }
-
-  /**
-   * @brief
-   * @return
-   */
-  bool valid() const { return std::distance(m_data, m_end) >= size(); }
+  auto data() const { return m_data; }
 
   /**
    * @brief Size of properties data.
    * @return size of properties data.
    */
-  unsigned size() const { return m_data[-1]; }
+  auto size() const { return m_data[-1]; }
 
   /**
    * @brief Result of operation. Valid only for `0xB0` and `0xB1` messages.
    * @return Result of operation.
    */
-  unsigned result() const { return m_data[-2]; }
+  auto result() const { return m_data[-2]; }
 
  protected:
-  Property(const MideaData &x) : m_header(&x[2]), m_data(&x[5]), m_end(&x.buffer().back()) {
+  Property(const MideaData &x) : m_header(&x[2]), m_data(&x[5]) {
     if (x[0] != 0xB5)
       m_data++;
   }
 
-  const uint8_t *m_header, *m_data, *const m_end;
+  const uint8_t *m_header, *m_data;
 };
 
 /**

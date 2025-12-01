@@ -167,26 +167,25 @@ auto ControllableStatusNew::prvGetDirectionEnum(unsigned x) -> AirFlowDirection 
 
 /* DeviceStatus */
 
-auto DeviceStatus::m_update(const MideaData &x) -> bool {
+auto DeviceStatus::m_update(const MideaData &x) -> int {
   switch (x.typeID()) {
     case 0xA0: {
       auto &s(x.ref<StatusA0>());
       ControllableStatusOld::m_update(s);
       ReadableStatusOld::m_update(s);
-      return true;
+      return 0;
     }
 
     case 0xA1: {
       auto &s(x.ref<StatusA1>());
       ControllableStatusOld::m_update(s);
       ReadableStatusOld::m_update(s);
-      return true;
+      return 0;
     }
 
     case 0xB0:
     case 0xB1:
-      ControllableStatusNew::m_update(x);
-      return true;
+      return ControllableStatusNew::m_update(x);
 
     case 0xB5:
       return DeviceCapabilities::m_update(x);
@@ -195,17 +194,17 @@ auto DeviceStatus::m_update(const MideaData &x) -> bool {
       auto &s(x.ref<StatusC0>());
       ControllableStatusOld::m_update(s);
       ReadableStatusOld::m_update(s);
-      return true;
+      return 0;
     }
 
     case 0xC1: {
       auto &s(x.ref<StatusC1>());
       ReadableStatusOld::m_update(s);
-      return true;
+      return 0;
     }
 
     default:
-      return false;
+      return -1;
   }
 }
 

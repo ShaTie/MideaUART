@@ -344,7 +344,7 @@ class ReadableStatus : public ReadableStatusOld {};
  */
 class DeviceStatus : public ControllableStatus, public ReadableStatus, public DeviceCapabilities {
  protected:
-  bool m_update(const MideaData &x);
+  auto m_update(const MideaData &x) -> int;
 };
 
 }  // namespace ac
