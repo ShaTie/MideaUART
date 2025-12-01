@@ -18,108 +18,108 @@ bool DeviceCapabilities::isQueryNeeded() const {
 static auto prvMode(auto x) {
   switch (x) {
     case 1:
-      return 0b1111;  // DRY | HEAT | AUTO | COOL
+      return 0b1111u;  // DRY | HEAT | AUTO | COOL
     case 2:
-      return 0b0110;  // HEAT | AUTO
+      return 0b0110u;  // HEAT | AUTO
     case 3:
-      return 0b0001;  // COOL
+      return 0b0001u;  // COOL
     case 4:
-      return 0b0101;  // HEAT | COOL
+      return 0b0101u;  // HEAT | COOL
     case 5:
-      return 0b1001;  // DRY | COOL
+      return 0b1001u;  // DRY | COOL
     default:
-      return 0b1011;  // DRY | AUTO | COOL
+      return 0b1011u;  // DRY | AUTO | COOL
   }
 }
 
 static auto prvSwing(auto x) {
   switch (x) {
     case 1:
-      return 0b11;  // HORIZONTAL | VERTICAL
+      return 0b11u;  // HORIZONTAL | VERTICAL
     case 2:
-      return 0b00;  //
+      return 0b00u;  //
     case 3:
-      return 0b10;  // HORIZONTAL
+      return 0b10u;  // HORIZONTAL
     default:
-      return 0b01;  // VERTICAL
+      return 0b01u;  // VERTICAL
   }
 }
 
 static auto prvFanSpeed(auto x) {
   switch (x) {
     case 1:
-      return 0b11111;  // RAW | AUTO | HIGH | MEDIUM | LOW
+      return 0b11111u;  // RAW | AUTO | HIGH | MEDIUM | LOW
     case 2:
-      return 0b00001;  // LOW
+      return 0b00001u;  // LOW
     case 3:
-      return 0b00101;  // HIGH | LOW
+      return 0b00101u;  // HIGH | LOW
     case 4:
-      return 0b01101;  // AUTO | HIGH | LOW
+      return 0b01101u;  // AUTO | HIGH | LOW
     case 7:
-      return 0b00111;  // HIGH | MEDIUM | LOW
+      return 0b00111u;  // HIGH | MEDIUM | LOW
     default:
-      return 0b01111;  // AUTO | HIGH | MEDIUM | LOW
+      return 0b01111u;  // AUTO | HIGH | MEDIUM | LOW
   }
 }
 
 static auto prvDrySmart(auto x) {
   switch (x) {
     case 1:
-      return 0b01;  // AUTO
+      return 0b01u;  // AUTO
     case 2:
-      return 0b11;  // CUSTOM | AUTO
+      return 0b11u;  // CUSTOM | AUTO
     case 3:
-      return 0b10;  // CUSTOM
+      return 0b10u;  // CUSTOM
     default:
-      return 0b00;  //
+      return 0b00u;  //
   }
 }
 
 static auto prvTurbo(auto x) {
   switch (x) {
     case 0:
-      return 0b01;  // COOL
+      return 0b01u;  // COOL
     case 2:
-      return 0b00;  //
+      return 0b00u;  //
     case 3:
-      return 0b10;  // HEAT
+      return 0b10u;  // HEAT
     default:
-      return 0b11;  // HEAT | COOL
+      return 0b11u;  // HEAT | COOL
   }
 }
 
 static auto prvPower(auto x) {
   switch (x) {
     case 2:
-      return 0b01;
+      return 0b01u;
     case 3:
-      return 0b11;
+      return 0b11u;
     default:
-      return 0b00;
+      return 0b00u;
   }
 }
 
 static auto prvFilter(auto x) {
   switch (x) {
     case 0:
-      return 0b00;
+      return 0b00u;
     case 3:
-      return 0b10;
+      return 0b10u;
     case 4:
-      return 0b11;
+      return 0b11u;
     default:
-      return 0b01;
+      return 0b01u;
   }
 }
 
 static auto prvEco(auto x) {
   switch (x) {
     case 1:
-      return 0b01;
+      return 0b01u;
     case 2:
-      return 0b11;
+      return 0b11u;
     default:
-      return 0b00;
+      return 0b00u;
   }
 }
 
