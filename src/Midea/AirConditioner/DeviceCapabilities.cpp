@@ -15,7 +15,7 @@ bool DeviceCapabilities::isQueryNeeded() const {
          m_hasIndoorHumidity || m_hasVerticalWind || m_hasHorizontalWind || m_isTwins || m_isFourDirection;
 }
 
-static auto prvMode(uint_fast8_t x) {
+static auto prvMode(auto x) {
   switch (x) {
     case 1:
       return 0b1111;  // DRY | HEAT | AUTO | COOL
@@ -32,7 +32,7 @@ static auto prvMode(uint_fast8_t x) {
   }
 }
 
-static auto prvSwing(uint_fast8_t x) {
+static auto prvSwing(auto x) {
   switch (x) {
     case 1:
       return 0b11;  // HORIZONTAL | VERTICAL
@@ -45,7 +45,7 @@ static auto prvSwing(uint_fast8_t x) {
   }
 }
 
-static auto prvFanSpeed(uint_fast8_t x) {
+static auto prvFanSpeed(auto x) {
   switch (x) {
     case 1:
       return 0b11111;  // RAW | AUTO | HIGH | MEDIUM | LOW
@@ -62,7 +62,7 @@ static auto prvFanSpeed(uint_fast8_t x) {
   }
 }
 
-static auto prvDrySmart(uint_fast8_t x) {
+static auto prvDrySmart(auto x) {
   switch (x) {
     case 1:
       return 0b01;  // AUTO
@@ -75,7 +75,7 @@ static auto prvDrySmart(uint_fast8_t x) {
   }
 }
 
-static auto prvTurbo(uint_fast8_t x) {
+static auto prvTurbo(auto x) {
   switch (x) {
     case 0:
       return 0b01;  // COOL
@@ -88,7 +88,7 @@ static auto prvTurbo(uint_fast8_t x) {
   }
 }
 
-static auto prvPower(uint_fast8_t x) {
+static auto prvPower(auto x) {
   switch (x) {
     case 2:
       return 0b01;
@@ -99,7 +99,7 @@ static auto prvPower(uint_fast8_t x) {
   }
 }
 
-static auto prvFilter(uint_fast8_t x) {
+static auto prvFilter(auto x) {
   switch (x) {
     case 0:
       return 0b00;
@@ -112,7 +112,7 @@ static auto prvFilter(uint_fast8_t x) {
   }
 }
 
-static auto prvEco(uint_fast8_t x) {
+static auto prvEco(auto x) {
   switch (x) {
     case 1:
       return 0b01;
