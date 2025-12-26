@@ -11,12 +11,12 @@ static const char *TAG = "AirConditioner";
 void AirConditioner::m_setup() {
   if (this->m_autoconfStatus != AUTOCONF_DISABLED)
     this->m_getCapabilities();
-  this->m_timerManager.registerTimer(this->m_powerUsageTimer);
-  this->m_powerUsageTimer.setCallback([this](Timer *timer) {
-    timer->reset();
-    this->m_getPowerUsage();
-  });
-  this->m_powerUsageTimer.start(30000);
+  // this->m_timerManager.registerTimer(this->m_powerUsageTimer);
+  // this->m_powerUsageTimer.setCallback([this](Timer *timer) {
+  //   timer->reset();
+  //   this->m_getPowerUsage();
+  // });
+  // this->m_powerUsageTimer.start(30000);
 }
 
 static bool checkConstraints(const Mode &mode, const Preset &preset) {
