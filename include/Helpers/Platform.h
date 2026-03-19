@@ -65,7 +65,13 @@ class IPAddress {
 #ifdef ARDUINO_ARCH_ESP8266
   // ESP8266 always has WiFi
   #define HAS_WIFI 1
-#elif defined(ESP32)
+#elif __has_include("soc/soc_caps.h")
+  #include "soc/soc_caps.h"
+  #ifdef SOC_WIFI_SUPPORTED
+    #define HAS_WIFI 1
+  #else
+    #define HAS_WIFI 0
+  #endif
   // ESP32 family: check chip capabilities
   #include "soc/soc_caps.h"
   #if SOC_WIFI_SUPPORTED
